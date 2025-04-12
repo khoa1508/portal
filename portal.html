@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng Game Tiếng Hán</title>
+    <style>
+        /* Cài đặt chung */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0; 
+            background-color: #f8f9fa; 
+            color: #212529;
+            line-height: 1.6;
+        }
+
+        .container {
+             max-width: 1140px; 
+             margin: 0 auto; 
+             padding: 0 20px; 
+        }
+
+        header {
+            background-color: #0d6efd; 
+            color: #ffffff; 
+            padding: 30px 0; 
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em; 
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9; 
+            margin-top: 5px;
+        }
+
+        /* Container chính chứa các danh mục game */
+        main.container {
+             padding-top: 20px;
+             padding-bottom: 40px;
+        }
+        
+        /* Kiểu dáng cho từng khu vực danh mục */
+        .game-category {
+            margin-bottom: 40px; 
+        }
+
+        /* Kiểu dáng cho tiêu đề danh mục (Cấp độ) */
+        .game-category h2 {
+            font-size: 1.8em; 
+            color: #343a40; 
+            border-bottom: 2px solid #0d6efd; 
+            padding-bottom: 10px;
+            margin-bottom: 25px; 
+        }
+
+        /* Kiểu dáng cho danh sách game trong mỗi danh mục */
+        .game-list {
+            list-style: none; 
+            padding: 0;
+            margin: 0;
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+        }
+
+        /* Kiểu dáng cho từng mục game (từng link) */
+        .game-list li {
+            flex-basis: calc(33.333% - 14px); 
+            min-width: 200px; 
+            box-sizing: border-box; 
+        }
+        
+        .game-list a {
+            display: block; 
+            padding: 15px 20px; 
+            background-color: #ffffff; 
+            color: #0d6efd; 
+            text-decoration: none; 
+            border: 1px solid #dee2e6; 
+            border-radius: 8px; 
+            text-align: center; 
+            font-weight: 500; 
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); 
+            height: 100%; 
+            box-sizing: border-box; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            min-height: 60px; 
+        }
+
+        .game-list a:hover,
+        .game-list a:focus { 
+            background-color: #0a58ca; 
+            border-color: #0a58ca;
+            color: #ffffff; 
+            transform: translateY(-4px); 
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); 
+            outline: none; 
+        }
+
+        /* Footer */
+        footer {
+            background-color: #e9ecef; 
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.9em;
+            color: #6c757d; 
+            margin-top: 40px; 
+            border-top: 1px solid #dee2e6;
+        }
+        footer p {
+             margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) { 
+             .game-list li {
+                 flex-basis: calc(50% - 10px); 
+                 min-width: 180px;
+             }
+             header h1 { font-size: 2.2em; }
+        }
+
+        @media (max-width: 576px) { 
+             .game-list li {
+                 flex-basis: 100%; 
+                 min-width: unset; 
+             }
+             header h1 { font-size: 1.8em; }
+             header p { font-size: 1em; }
+             .game-category h2 { font-size: 1.5em; }
+             .container { padding: 0 15px; }
+        }
+    </style>
+    </head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Cổng Game Tiếng Hán</h1>
+            <p>Tổng hợp các trò chơi ôn tập theo giáo trình Hán Ngữ & POA</p> </div>
+    </header>
+
+    <main class="container">
+
+        <section class="game-category">
+            <h2>Giáo trình hán ngữ 1</h2>
+            <ul class="game-list">
+                <li>
+                    <a href="https://khoa1508.github.io/han1/bai3" target="_blank" title="Chơi Ôn tập bài 3">
+                        Ôn tập bài 3
+                    </a>
+                </li>
+                <li>
+                    <a href="https://khoa1508.github.io/han1/bai3review" target="_blank" title="Chơi Ôn tập đầu giờ bài 3">
+                        Ôn tập đầu giờ bài 3
+                    </a>
+                </li>
+                <li>
+                    <a href="https://khoa1508.github.io/han1/ontap10" target="_blank" title="Chơi Ôn tập bài 10">
+                        Ôn tập bài 10
+                    </a>
+                </li>
+                <li>
+                    <a href="https://khoa1508.github.io/han1/bai11" target="_blank" title="Chơi Ôn tập bài 11">
+                        Ôn tập bài 11
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="game-category">
+            <h2>Giáo trình hán ngữ 4</h2>
+            <ul class="game-list">
+                <li>
+                    <a href="https://khoa1508.github.io/han4/" target="_blank" title="Chơi Ôn tập bài 1 (Hán 4)"> 
+                        Ôn tập bài 1 
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="game-category">
+            <h2>POA Trung cấp</h2>
+            <ul class="game-list">
+                <li>
+                    <a href="https://khoa1508.github.io/poa/zhongji1" target="_blank" title="Chơi Bài 1 (POA Trung cấp)">
+                        Bài 1
+                    </a>
+                </li>
+                </ul>
+        </section>
+
+        </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Khoa1508.</p> 
+        </div>
+    </footer>
+
+</body>
+</html>
