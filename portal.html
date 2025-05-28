@@ -4,300 +4,277 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LỚP HỌC TRỰC TUYẾN DDK CHINESE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Cài đặt chung */
+        /* Custom global styles */
+        :root {
+            /* Bảng màu mới dựa trên hình ảnh tham khảo */
+            --color-primary-orange: #FF8C00; /* Cam chính cho tương tác (từ nút trong ảnh) */
+            --color-primary-orange-hover: #E07B00; /* Cam đậm hơn khi hover */
+            
+            --color-header-title-blue: #004A99; /* Xanh dương đậm cho tiêu đề chính của trang */
+            --color-section-title-blue: #105EAD; /* Xanh dương cho tiêu đề các mục (Hán ngữ 1, etc.) */
+
+            --color-text-dark: #2c3e50;    /* Xám xanh đậm cho văn bản chính */
+            --color-text-medium: #55606B;  /* Xám vừa cho văn bản phụ, văn bản thẻ ban đầu */
+            --color-text-light: #7f8c8d;   /* Xám nhạt cho footer */
+
+            --color-background-body: #F4F8FB; /* Xanh dương rất nhạt cho nền trang */
+            --color-background-card: rgba(255, 255, 255, 0.8); /* Nền thẻ glass, tăng độ mờ nhẹ */
+            --color-border-card: rgba(190, 210, 230, 0.6);   /* Viền thẻ xanh nhạt hơn */
+            --color-border-divider: #D8E2EB; /* Viền chia mục */
+            
+            --color-shadow-soft: rgba(44, 62, 80, 0.12); /* Đổ bóng nhẹ nhàng hơn */
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0; 
-            background-color: #f8f9fa; 
-            color: #212529;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--color-background-body);
+            color: var(--color-text-dark);
         }
 
-        .container {
-             max-width: 1140px; 
-             margin: 0 auto; 
-             padding: 0 20px; 
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0eafc; /* Màu nền scrollbar nhạt hơn */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a7bce8; /* Màu thumb scrollbar */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8eabd8;
         }
 
-        header {
-            background-color: #0d6efd; 
-            color: #ffffff; 
-            padding: 30px 0; 
-            text-align: center;
-            margin-bottom: 40px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Glass card style using new CSS variables */
+        .glass-card {
+            background: var(--color-background-card);
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
+            border: 1px solid var(--color-border-card);
+            box-shadow: 0 6px 20px 0 var(--color-shadow-soft);
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em; 
-        }
-        
-        header p {
-            font-size: 1.1em;
-            opacity: 0.9; 
-            margin-top: 5px;
-        }
-
-        /* Container chính chứa các danh mục game */
-        main.container {
-             padding-top: 20px;
-             padding-bottom: 40px;
-        }
-        
-        /* Kiểu dáng cho từng khu vực danh mục */
-        .game-category {
-            margin-bottom: 40px; 
-        }
-
-        /* Kiểu dáng cho tiêu đề danh mục (Cấp độ) */
-        .game-category h2 {
-            font-size: 1.8em; 
-            color: #343a40; 
-            border-bottom: 2px solid #0d6efd; 
-            padding-bottom: 10px;
-            margin-bottom: 25px; 
-        }
-
-        /* Kiểu dáng cho danh sách game trong mỗi danh mục */
-        .game-list {
-            list-style: none; 
-            padding: 0;
-            margin: 0;
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 20px; 
-        }
-
-        /* Kiểu dáng cho từng mục game (từng link) */
-        .game-list li {
-            flex-basis: calc(33.333% - 14px); 
-            min-width: 200px; 
-            box-sizing: border-box; 
-        }
-        
-        .game-list a {
-            display: block; 
-            padding: 15px 20px; 
-            background-color: #ffffff; 
-            color: #0d6efd; 
-            text-decoration: none; 
-            border: 1px solid #dee2e6; 
-            border-radius: 8px; 
-            text-align: center; 
-            font-weight: 500; 
-            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; 
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); 
-            height: 100%; 
-            box-sizing: border-box; 
-            display: flex; 
-            align-items: center;
-            justify-content: center;
-            min-height: 60px; 
-        }
-
-        .game-list a:hover,
-        .game-list a:focus { 
-            background-color: #0a58ca; 
-            border-color: #0a58ca;
-            color: #ffffff; 
-            transform: translateY(-4px); 
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); 
-            outline: none; 
-        }
-
-        /* Footer */
-        footer {
-            background-color: #e9ecef; 
-            padding: 25px 0;
-            text-align: center;
-            font-size: 0.9em;
-            color: #6c757d; 
-            margin-top: 40px; 
-            border-top: 1px solid #dee2e6;
-        }
-        footer p {
-             margin: 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) { 
-             .game-list li {
-                 flex-basis: calc(50% - 10px); 
-                 min-width: 180px;
-             }
-             header h1 { font-size: 2.2em; }
-        }
-
-        @media (max-width: 576px) { 
-             .game-list li {
-                 flex-basis: 100%; 
-                 min-width: unset; 
-             }
-             header h1 { font-size: 1.8em; }
-             header p { font-size: 1em; }
-             .game-category h2 { font-size: 1.5em; }
-             .container { padding: 0 15px; }
+        .focus\:ring-primary-orange:focus {
+             box-shadow: 0 0 0 3px var(--color-primary-orange); /* Cập nhật focus ring */
         }
     </style>
-    </head>
-<body>
-
-    <header>
-        <div class="container">
-            <h1>LỚP HỌC TRỰC TUYẾN DDK CHINESE</h1>
-            <p>Tổng hợp các trò chơi ôn tập và giáo cụ dạy học</p> </div>
+</head>
+<body> <header class="py-10 md:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight" style="color: var(--color-header-title-blue);">
+                LỚP HỌC TRỰC TUYẾN DDK CHINESE
+            </h1>
+            <p class="mt-4 text-lg sm:text-xl" style="color: var(--color-text-medium);">
+                Tổng hợp các trò chơi ôn tập và giáo cụ dạy học
+            </p>
+        </div>
     </header>
 
-    <main class="container">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <section class="game-category">
-            <h2>Giáo trình hán ngữ 1</h2>
-            <ul class="game-list">
-                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai1" target="_blank" title="Chơi Ôn tập bài 1">
-                        Ôn tập bài 1
-                    </a>
-                </li>
-                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai2" target="_blank" title="Chơi Ôn tập bài 2">
-                        Ôn tập bài 2
+        <section class="mb-12 md:mb-16">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 pb-3 border-b" style="color: var(--color-section-title-blue); border-color: var(--color-border-divider);">
+                Giáo trình hán ngữ 1
+            </h2>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+                <li>
+                    <a href="https://khoa1508.github.io/han1/bai1" target="_blank" title="Chơi Ôn tập bài 1"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 1</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai3" target="_blank" title="Chơi Ôn tập bài 3">
-                        Ôn tập bài 3
+                    <a href="https://khoa1508.github.io/han1/bai2" target="_blank" title="Chơi Ôn tập bài 2"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 2</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai3review" target="_blank" title="Chơi Ôn tập đầu giờ bài 3">
-                        Ôn tập đầu giờ bài 3
+                    <a href="https://khoa1508.github.io/han1/bai3" target="_blank" title="Chơi Ôn tập bài 3"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 3</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai4" target="_blank" title="Chơi Ôn tập bài 4">
-                        Ôn tập bài 4
+                    <a href="https://khoa1508.github.io/han1/bai3review" target="_blank" title="Chơi Ôn tập đầu giờ bài 3"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập đầu giờ bài 3</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai5" target="_blank" title="Chơi Ôn tập bài 5">
-                        Ôn tập bài 5
-                    </a>
-                </li>
-                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai6" target="_blank" title="Chơi Ôn tập bài 6">
-                        Ôn tập bài 6
+                    <a href="https://khoa1508.github.io/han1/bai4" target="_blank" title="Chơi Ôn tập bài 4"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 4</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/han1/bai7" target="_blank" title="Chơi Ôn tập bài 7">
-                        Ôn tập bài 7
-                    </a>
-                </li>
-                <li>
-                    <a href="https://khoa1508.github.io/han1/ontap10" target="_blank" title="Chơi Ôn tập bài 10">
-                        Ôn tập bài 10
-                    </a>
-                </li>
-                <li>
-                    <a href="https://khoa1508.github.io/han1/bai11" target="_blank" title="Chơi Ôn tập bài 11">
-                        Ôn tập bài 11
+                    <a href="https://khoa1508.github.io/han1/bai5" target="_blank" title="Chơi Ôn tập bài 5"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 5</span>
                     </a>
                 </li>
                  <li>
-                    <a href="https://khoa1508.github.io/han1/bai12" target="_blank" title="Chơi Ôn tập bài 12">
-                        Ôn tập bài 12
+                    <a href="https://khoa1508.github.io/han1/bai6" target="_blank" title="Chơi Ôn tập bài 6"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 6</span>
                     </a>
                 </li>
-                    <li>
-                    <a href="https://khoa1508.github.io/han1/bai13" target="_blank" title="hơi Ôn tập bài 13">
-                        Ôn tập bài 13
+                <li>
+                    <a href="https://khoa1508.github.io/han1/bai7" target="_blank" title="Chơi Ôn tập bài 7"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 7</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://khoa1508.github.io/han1/ontap10" target="_blank" title="Chơi Ôn tập bài 10"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 10</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://khoa1508.github.io/han1/bai11" target="_blank" title="Chơi Ôn tập bài 11"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 11</span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="https://khoa1508.github.io/han1/bai12" target="_blank" title="Chơi Ôn tập bài 12"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 12</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://khoa1508.github.io/han1/bai13" target="_blank" title="Chơi Ôn tập bài 13"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 13</span>
                     </a>
                 </li>
             </ul>
         </section>
 
-        <section class="game-category">
-            <h2>Giáo trình hán ngữ 4</h2>
-            <ul class="game-list">
-                <li>
-                    <a href="https://khoa1508.github.io/han4/han4bai1" target="_blank" title="Chơi Ôn tập bài 1 (Hán 4)"> 
-                        Ôn tập bài 1 
+        <section class="mb-12 md:mb-16">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 pb-3 border-b" style="color: var(--color-section-title-blue); border-color: var(--color-border-divider);">
+                Giáo trình hán ngữ 4
+            </h2>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+                 <li>
+                    <a href="https://khoa1508.github.io/han4/han4bai1" target="_blank" title="Chơi Ôn tập bài 1 (Hán 4)"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 1</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/han4/bai2" target="_blank" title="Chơi Ôn tập bài 2 (Hán 4)"> 
-                        Ôn tập bài 2 
+                    <a href="https://khoa1508.github.io/han4/bai2" target="_blank" title="Chơi Ôn tập bài 2 (Hán 4)"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 2</span>
                     </a>
                 </li>
-                  <li>
-                    <a href="https://khoa1508.github.io/han4/bai3" target="_blank" title="Chơi Ôn tập bài 3 (Hán 4)"> 
-                        Ôn tập bài 3 
+                <li>
+                    <a href="https://khoa1508.github.io/han4/bai3" target="_blank" title="Chơi Ôn tập bài 3 (Hán 4)"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 3</span>
                     </a>
                 </li>
             </ul>
         </section>
-            <section class="game-category">
-            <h2>POA Sơ cấp 2</h2>
-            <ul class="game-list">
+
+        <section class="mb-12 md:mb-16">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 pb-3 border-b" style="color: var(--color-section-title-blue); border-color: var(--color-border-divider);">
+                POA Sơ cấp 2
+            </h2>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
                 <li>
-                    <a href="https://khoa1508.github.io/poa/chuji2bai1" target="_blank" title="Chơi Bài 1 (POA sơ cấp 2)">
-                        Bài 1
+                    <a href="https://khoa1508.github.io/poa/chuji2bai1" target="_blank" title="Chơi Bài 1 (POA sơ cấp 2)"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Bài 1</span>
                     </a>
                 </li>
-                </ul>
+            </ul>
         </section>
 
-        <section class="game-category">
-            <h2>POA Trung cấp</h2>
-            <ul class="game-list">
+        <section class="mb-12 md:mb-16">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 pb-3 border-b" style="color: var(--color-section-title-blue); border-color: var(--color-border-divider);">
+                POA Trung cấp
+            </h2>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
                 <li>
-                    <a href="https://khoa1508.github.io/poa/zhongji1" target="_blank" title="Chơi Bài 1 (POA Trung cấp)">
-                        Bài 1
+                    <a href="https://khoa1508.github.io/poa/zhongji1" target="_blank" title="Chơi Bài 1 (POA Trung cấp)"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Bài 1</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/poa/zhongjibai2" target="_blank" title="Chơi Bài 2 (POA Trung cấp)">
-                        Bài 2
+                    <a href="https://khoa1508.github.io/poa/zhongjibai2" target="_blank" title="Chơi Bài 2 (POA Trung cấp)"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Bài 2</span>
                     </a>
                 </li>
-                </ul>
+            </ul>
         </section>
-         <section class="game-category">
-            <h2>GIÁO CỤ</h2>
-            <ul class="game-list">
-                <li>
-                    <a href="https://whiteboard-2djl.onrender.com" target="_blank" title="BẢNG TRẮNG TƯƠNG TÁC NHÓM 1">
-                        BẢNG TRẮNG TƯƠNG TÁC NHÓM 1
-                    </a>
-                </li>
+
+        <section class="mb-12 md:mb-16">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 pb-3 border-b" style="color: var(--color-section-title-blue); border-color: var(--color-border-divider);">
+                GIÁO CỤ
+            </h2>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
                  <li>
-                    <a href="https://whiteboard2-ojat.onrender.com" target="_blank" title="BBẢNG TRẮNG TƯƠNG TÁC NHÓM 2">
-                        BẢNG TRẮNG TƯƠNG TÁC NHÓM 2
+                    <a href="https://whiteboard-2djl.onrender.com" target="_blank" title="BẢNG TRẮNG TƯƠNG TÁC NHÓM 1"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">BẢNG TRẮNG TƯƠNG TÁC NHÓM 1</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://khoa1508.github.io/han1/phieubaitapbai7" target="_blank" title="PHIẾU BÀI TẬP BÀI 7 HÁN 1">
-                        PHIẾU BÀI TẬP BÀI 7 HÁN 1
+                    <a href="https://whiteboard2-ojat.onrender.com" target="_blank" title="BẢNG TRẮNG TƯƠNG TÁC NHÓM 2"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">BẢNG TRẮNG TƯƠNG TÁC NHÓM 2</span>
                     </a>
                 </li>
-                 <li>
-                    <a href="https://khoa1508.github.io/han1/phieubaitapbai14" target="_blank" title="PHIẾU BÀI TẬP BÀI 14 HÁN 1">
-                        PHIẾU BÀI TẬP BÀI 14 HÁN 1
+                <li>
+                    <a href="https://khoa1508.github.io/han1/phieubaitapbai7" target="_blank" title="PHIẾU BÀI TẬP BÀI 7 HÁN 1"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">PHIẾU BÀI TẬP BÀI 7 HÁN 1</span>
                     </a>
                 </li>
-                </ul>
+                <li>
+                    <a href="https://khoa1508.github.io/han1/phieubaitapbai14" target="_blank" title="PHIẾU BÀI TẬP BÀI 14 HÁN 1"
+                       class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
+                        <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">PHIẾU BÀI TẬP BÀI 14 HÁN 1</span>
+                    </a>
+                </li>
+            </ul>
         </section>
 
-        </main>
+    </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Khoa1508.</p> 
+    <footer class="mt-16 md:mt-24 py-8 border-t" style="border-color: var(--color-border-divider);">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm" style="color: var(--color-text-light);">&copy; 2025 Khoa1508. Thiết kế lấy cảm hứng từ Apple & hình ảnh tham khảo.</p>
         </div>
     </footer>
-
+    <script>
+        // Script để xử lý class group-hover cho màu chữ trên thẻ
+        document.querySelectorAll('.group').forEach(card => {
+            const span = card.querySelector('span');
+            if (span) {
+                card.addEventListener('mouseenter', () => {
+                    span.style.color = 'var(--color-primary-orange)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    // Đảm bảo màu chữ trở lại đúng màu ban đầu khi không hover
+                    span.style.color = 'var(--color-text-medium)';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
