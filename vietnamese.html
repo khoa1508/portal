@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>拼读练习｜越语听辨拼写（Nghe chọn chính tả đúng）</title>
+  <!-- Modern cute fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Inter:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f8fafc;          /* light */
+      --card:#ffffff;        /* white */
+      --ink:#0f172a;         /* slate-900 */
+      --muted:#6b7280;       /* gray-500 */
+      --line:#e5e7eb;        /* gray-200 */
+      --brand:#06b6d4;       /* cyan-500 */
+      --brand-2:#a78bfa;     /* violet-400 */
+      --ok:#22c55e;          /* green-500 */
+      --bad:#ef4444;         /* red-500 */
+      --shadow:0 10px 30px rgba(2,6,23,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:
+        radial-gradient(1200px 500px at 10% -10%, rgba(6,182,212,.10), transparent 60%),
+        radial-gradient(900px 400px at 110% 0%, rgba(167,139,250,.12), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      font:16px/1.55 "Nunito","Inter","Noto Sans SC", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing:.2px;
+    }
+    header{
+      display:flex;align-items:center;gap:14px;justify-content:space-between;padding:18px 22px;position:sticky;top:0;z-index:5;
+      background:linear-gradient(180deg, rgba(255,255,255,.92) 40%, rgba(255,255,255,0));
+      backdrop-filter:saturate(1.2) blur(8px); border-bottom:1px solid var(--line);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#67e8f9,#c7d2fe);display:grid;place-items:center;box-shadow:var(--shadow)}
+    .logo span{font-size:26px}
+    h1{margin:0;font-size:20px;font-weight:800}
+    .sub{color:var(--muted);font-size:12px;margin-top:2px}
+
+    .wrap{max-width:980px;margin:0 auto;padding:22px}
+    .cards{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:900px){.cards{grid-template-columns:1fr 1fr}}
+
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+    .card h2{margin:0 0 8px 0;font-size:18px}
+    .muted{color:var(--muted)}
+
+    .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0 0}
+    .pill{background:#f1f5f9;border:1px solid var(--line);padding:8px 12px;border-radius:999px;display:flex;align-items:center;gap:8px}
+    .btn{border:0;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer;background:#e0f2fe;color:#0c4a6e;border:1px solid #bae6fd;box-shadow:var(--shadow)}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.brand{background:linear-gradient(135deg, #d5f5ff, #efe9ff);color:#312e81;border-color:#dbeafe}
+    .btn.ok{background:#dcfce7;color:#065f46;border-color:#bbf7d0}
+
+    .score{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:999px}
+
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .tab{padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:700}
+    .tab.active{background:linear-gradient(135deg, rgba(6,182,212,.15), rgba(167,139,250,.18));}
+
+    .options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+    @media(min-width:600px){.options{grid-template-columns:1fr 1fr}}
+    .opt{padding:14px;border-radius:14px;background:#ffffff;border:1.5px solid var(--line);cursor:pointer;text-align:center;transition:.15s box-shadow,.15s transform}
+    .opt:hover{box-shadow:0 6px 16px rgba(2,6,23,.10); transform:translateY(-1px)}
+    .opt.correct{outline:2px solid var(--ok)}
+    .opt.incorrect{outline:2px solid var(--bad)}
+
+    .toast{position:fixed;right:16px;bottom:16px;background:#ffffff;border:1px solid var(--line);padding:12px 14px;border-radius:12px;opacity:0;transform:translateY(8px);transition:.3s;box-shadow:var(--shadow)}
+    .toast.show{opacity:1;transform:none}
+
+    input[type=range]{width:160px}
+    input[type=number]{width:64px}
+    textarea{width:100%;min-height:200px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:12px}
+    code{background:#f1f5f9;border:1px solid var(--line);padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"><span>🎀</span></div>
+      <div>
+        <h1>拼读练习 · 听音选正确拼写</h1>
+        <div class="sub">越南语入门 — 只保留「听与选」题型 · 数据来源：你提供的 <b>拼读练习</b></div>
+      </div>
+    </div>
+    <div class="score">
+      <span class="badge">⏱️ 时间 <b id="timer">00:00</b></span>
+      <span class="badge">⭐ 得分 <b id="points">0</b></span>
+      <span class="badge">🔥 连对 <b id="streak">0</b></span>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" id="tab-1">① 练习</button>
+      <button class="tab" role="tab" aria-selected="false" id="tab-2">② 数据编辑</button>
+      <button class="tab" role="tab" aria-selected="false" id="tab-3">设置</button>
+    </div>
+
+    <!-- TAB 1: Minimal pair choice only -->
+    <section class="card" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+      <h2>🎯 听一听，选出<b>正确拼写</b></h2>
+      <p class="muted">提示：点击「播放」后聆听越南语读音，然后在下面选项中选择正确的词/词组。</p>
+      <div class="toolbar">
+        <button class="btn brand" id="play">▶️ 播放</button>
+        <button class="btn" id="repeat">🔁 重播</button>
+        <button class="btn" id="skip">⏭️ 跳过</button>
+        <span class="pill">选项数量：<input id="nopts" type="number" min="2" max="5" value="4"></span>
+      </div>
+      <div class="options" id="options"></div>
+      <p class="muted" id="hintbox">出错一次后会出现小提示～(≧◡≦) ♡</p>
+    </section>
+
+    <!-- TAB 2: Data editor (one item per line) -->
+    <section class="card" id="panel-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+      <h2>🧰 数据编辑（来自「拼读练习」）</h2>
+      <p class="muted">每一行是一条词/短语。可以把书上的条目直接粘贴进来，系统会按常见混淆（<code>tr/ch</code>、<code>s/x</code>、<code>d/gi/r</code>、<code>g/gh</code>、<code>ng/ngh</code>、声调等）自动生成干扰项。</p>
+      <div class="toolbar">
+        <button class="btn" id="load-sample">📦 载入样例（取自你给的图片）</button>
+        <button class="btn ok" id="apply-list">💾 应用列表</button>
+        <button class="btn" id="export-list">🧾 导出 TXT</button>
+        <button class="btn" id="reset-progress">🧹 清除进度</button>
+      </div>
+      <textarea id="rawlist" placeholder="例如：\ntrai gái\nphụ nữ\nthủ đô\n…"></textarea>
+      <p class="muted">数据保存于浏览器（LocalStorage），可随时导出/导入。</p>
+    </section>
+
+    <!-- TAB 3: Settings -->
+    <section class="card" id="panel-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+      <h2>⚙️ 设置 · 语音</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>语音播放</h3>
+          <div class="toolbar">
+            <span class="pill">发音：<select id="voice"></select></span>
+            <span class="pill">语速：<input id="rate" type="range" min="0.7" max="1.3" value="1" step="0.05"> <span id="rate-val">1.00×</span></span>
+            <span class="pill">每题播放：<input id="repeats" type="number" min="1" max="5" value="1"></span>
+          </div>
+          <p class="muted">小贴士：Safari/iOS 需要先点一次播放授权声音；若未见越语语音，等候列表加载或选择与 <code>vi-VN</code> 接近的声音。</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// ===== Helpers =====
+const $ = s => document.querySelector(s); const $$ = s => Array.from(document.querySelectorAll(s));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1600); }
+
+// Timer/score
+let points=0, streak=0, timerSec=0, timerInt=null; function startTimer(){ if(timerInt) return; timerInt=setInterval(()=>{ timerSec++; $('#timer').textContent=new Date(timerSec*1000).toISOString().substring(14,19); },1000); }
+
+// ===== Voices (TTS) =====
+let VOICES=[], currentVoice=null; function loadVoices(){ VOICES = speechSynthesis.getVoices(); const sel=$('#voice'); if(!sel) return; sel.innerHTML=''; const desired=['vi-VN','vi_VN']; VOICES.sort((a,b)=>(desired.includes(b.lang)-desired.includes(a.lang))||a.name.localeCompare(b.name)); VOICES.forEach((v,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${v.name} (${v.lang})`; if(desired.includes(v.lang) && !currentVoice){ currentVoice=v; o.selected=true; } sel.appendChild(o); }); if(!currentVoice && VOICES[0]){ currentVoice=VOICES[0]; sel.value=0; } }
+window.speechSynthesis.onvoiceschanged=loadVoices;
+function speak(text,{rate=1,repeats=1}={}){ return new Promise(async res=>{ if(!text){ res(); return;} for(let i=0;i<repeats;i++){ const u=new SpeechSynthesisUtterance(text); u.voice=currentVoice; u.lang=currentVoice?.lang||'vi-VN'; u.rate=rate; speechSynthesis.cancel(); speechSynthesis.speak(u); while(speechSynthesis.speaking) await sleep(50); if(i<repeats-1) await sleep(250);} res(); }); }
+
+// ===== Data =====
+const SAMPLE_LIST = `bài báo
+trai gái
+sai trái
+máy bay
+cay cú
+thay thế
+chạy dài
+khâu vá
+chậu thau
+trầu cau
+mau lẹ
+lâu nhâu
+đầu trâu
+nhà lầu
+câu cá
+sâu xa
+đau đầu
+theo đuổi
+giấy tờ
+thấy rõ
+nhờ cậy
+thầy giáo
+tại sao
+của cải
+gió bụi
+vui chơi
+lúi húi
+trụi lùi
+bối rối
+Hà Nội
+đòi hỏi
+mọi nơi
+soi thấu
+hội chợ
+chơi bời
+chờ đợi
+nghỉ ngơi
+cứu chữa
+hữu nghị
+lưu ý
+khó ngửi
+gửi lời
+hiu hắt
+chịu khó
+tiu nghỉu
+lêu khêu
+leo trèo
+lẻo đẻo
+heo may
+rau muống
+đuôi gà
+hươu nai
+cười tươi
+bưởi đào
+lưỡi trai
+người đời
+yêu dấu
+nhiều điều
+yếu đuối
+phụ nữ
+nghề phụ
+phù hợp
+lệ phí
+phở bò
+chế độ
+che chở
+chè lá
+va li
+vé số
+vệ sĩ
+vi mô
+ví dụ
+vị trí
+vì thế
+trẻ thơ
+trì trệ
+trị giá
+xứ sở
+nghệ sĩ
+kỵ sĩ
+lo sợ
+số đỏ
+sơ hở
+sơ-mi
+giả vờ
+giả sử
+ký giả
+do dự
+ra-đi-ô
+ra-đa
+gia vị
+khá giả
+thi đua
+gò ghề
+đi nhẹ
+thứ tự
+thư từ
+tu bổ
+bò dê
+tỉ mỉ
+thư ký
+thế hệ
+nhà ga
+cũ kỹ
+cử tạ
+ngã ba
+tủ gỗ
+đa tạ
+cờ đỏ
+đổ bộ
+cơ khí
+ca nô
+bố mẹ
+ba má
+bà cụ
+bé nhỏ
+bờ Hồ
+đi bộ
+no nê
+bé bé
+như thế
+nghi ngờ
+hé nở
+ghi nhớ
+tò mò
+nhổ mạ
+thờ ơ
+mẹ đẻ
+ghế
+gỗ
+gò bó
+ngu ngơ
+mơ hồ
+thô lỗ
+ghẻ lở
+thủ đô
+khí thế
+ha hả
+khả thi
+đu đủ
+đi tu
+ghi-ta
+cố ý
+hồ đồ
+hả hê
+kẻ thù
+thế kỷ
+cá thể
+lò cò
+la ó
+đi ô tô
+đi đò`;
+
+let WORDS = (localStorage.getItem('vn_words')||'').trim(); if(!WORDS){ WORDS=SAMPLE_LIST; }
+function saveWords(){ localStorage.setItem('vn_words', WORDS); }
+function getItems(){ return WORDS.split(/\n+/).map(s=>s.trim()).filter(Boolean); }
+
+// ===== Distractor generator =====
+function replaceStart(word, from, to){ return word.replace(new RegExp('^'+from),''+to); }
+function noDiacritics(s){ return s.normalize('NFD').replace(/\p{Diacritic}/gu,'').replace(/đ/g,'d').replace(/Đ/g,'D'); }
+function randomToneVariant(s){ const toneMap = { 'a':'áàảãạ','ă':'ắằẳẵặ','â':'ấầẩẫậ','e':'éèẻẽẹ','ê':'ếềểễệ','i':'íìỉĩị','o':'óòỏõọ','ô':'ốồổỗộ','ơ':'ớờởỡợ','u':'úùủũụ','ư':'ứừửữự','y':'ýỳỷỹỵ' }; let out=''; let changed=false; for(const ch of s){ if(!changed && toneMap[ch]){ const opts=toneMap[ch]; const pick=opts[Math.floor(Math.random()*opts.length)]; out+=pick; changed=true; } else { out+=ch; } } return changed?out:s; }
+function altSpellings(word){ const alts=new Set(); const w=word;
+  if(/^tr/.test(w)) alts.add(replaceStart(w,'tr','ch')); if(/^ch/.test(w)) alts.add(replaceStart(w,'ch','tr'));
+  if(/^s/.test(w)) alts.add(replaceStart(w,'s','x')); if(/^x/.test(w)) alts.add(replaceStart(w,'x','s'));
+  if(/^gi/.test(w)) { alts.add(replaceStart(w,'gi','d')); alts.add(replaceStart(w,'gi','r')); }
+  if(/^d/.test(w)) { alts.add(replaceStart(w,'d','gi')); alts.add(replaceStart(w,'d','r')); }
+  if(/^r/.test(w)) { alts.add(replaceStart(w,'r','d')); alts.add(replaceStart(w,'r','gi')); }
+  if(/^gh[eiê]/.test(w)) alts.add(w.replace(/^gh/,'g')); if(/^g[ieê]/.test(w)) alts.add(w.replace(/^g/,'gh'));
+  if(/^ngh[ieê]/.test(w)) alts.add(w.replace(/^ngh/,'ng')); if(/^ng[ieê]/.test(w)) alts.add(w.replace(/^ng/,'ngh'));
+  if(/^c[ei]/.test(w)) { alts.add(w.replace(/^c/,'k')); alts.add(w.replace(/^c/,'q')); }
+  if(/^k[ei]/.test(w)) { alts.add(w.replace(/^k/,'c')); }
+  if(/^q(u?)/.test(w)) { alts.add(w.replace(/^q/,'k')); }
+  const nod=noDiacritics(w); if(nod!==w) alts.add(nod);
+  alts.add(randomToneVariant(w));
+  if(/-/.test(w)) { alts.add(w.replace(/-/g,' ')); alts.add(w.replace(/-/g,'')); }
+  alts.delete(w); return Array.from(alts).slice(0,6);
+}
+
+// ===== Quiz state =====
+let idx=0; let items=getItems();
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function render(){ if(items.length===0){ $('#options').innerHTML='<em>暂无数据。</em>'; return; }
+  const word = items[idx % items.length];
+  const opts=[word, ...altSpellings(word)].filter(Boolean);
+  const n = Math.min(+$('#nopts').value || 4, Math.max(2, opts.length));
+  const picked = shuffle(opts).slice(0, n-1);
+  if(!picked.includes(word)) picked[0]=word;
+  const final = shuffle([word, ...picked.filter(o=>o!==word).slice(0, n-1)]);
+  const box=$('#options'); box.innerHTML='';
+  final.forEach(text=>{
+    const b=document.createElement('button'); b.className='opt'; b.textContent=text; b.onclick=()=>choose(text,b,word); box.appendChild(b);
+  });
+  $('#hintbox').textContent='';
+}
+
+function choose(choice, btn, correct){ if(choice===correct){ btn.classList.add('correct'); points+=6; streak++; toast('🎉 太棒啦！+6'); idx++; setTimeout(()=>{ render(); speak(items[idx%items.length],{rate:+$('#rate').value,repeats:+$('#repeats').value}); }, 260);
+  }else{ btn.classList.add('incorrect'); streak=0; $('#hintbox').textContent='提示：注意声母与声调（如 tr/ch, s/x, d/gi/r, gh~g, ngh~ng…）'; toast('🙃 再听一遍试试～'); }
+  $('#points').textContent=points; $('#streak').textContent=streak; }
+
+function play(){ startTimer(); speak(items[idx%items.length],{rate:+$('#rate').value,repeats:+$('#repeats').value}); }
+
+// ===== Tabs & Bind =====
+function showTab(n){ $$('.tab').forEach((t,i)=>{ t.classList.toggle('active', i===n-1); t.setAttribute('aria-selected', i===n-1); }); [1,2,3].forEach(i=> $('#panel-'+i).hidden = i!==n); }
+function bind(){
+  $('#tab-1').onclick=()=>showTab(1);
+  $('#tab-2').onclick=()=>{ showTab(2); $('#rawlist').value = WORDS; };
+  $('#tab-3').onclick=()=>showTab(3);
+
+  $('#play').onclick=()=>{ play(); };
+  $('#repeat').onclick=()=>{ speak(items[idx%items.length],{rate:+$('#rate').value,repeats:+$('#repeats').value}); };
+  $('#skip').onclick=()=>{ idx=(idx+1)%items.length; render(); play(); };
+
+  $('#voice').onchange=e=>{ currentVoice = speechSynthesis.getVoices()[+e.target.value]||currentVoice; toast('已切换发音'); };
+  $('#rate').oninput=e=> $('#rate-val').textContent=(+e.target.value).toFixed(2)+'×';
+
+  $('#load-sample').onclick=()=>{ $('#rawlist').value=SAMPLE_LIST; toast('已载入样例'); };
+  $('#apply-list').onclick=()=>{ WORDS = $('#rawlist').value.trim(); saveWords(); items=getItems(); idx=0; render(); toast('已应用并保存'); };
+  $('#export-list').onclick=()=>{ const blob=new Blob([WORDS],{type:'text/plain'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='words.txt'; a.click(); URL.revokeObjectURL(url); };
+  $('#reset-progress').onclick=()=>{ points=0; streak=0; timerSec=0; $('#points').textContent=0; $('#streak').textContent=0; $('#timer').textContent='00:00'; toast('进度已清除'); };
+}
+
+(function(){ bind(); loadVoices(); startTimer(); items=getItems(); render(); })();
+</script>
+</body>
+</html>
