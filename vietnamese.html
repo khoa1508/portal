@@ -58,6 +58,11 @@
             transform: translate(3px, 3px);
             box-shadow: none;
         }
+        .speaker-btn:disabled {
+            background-color: #D1CFC9;
+            cursor: not-allowed;
+            box-shadow: 3px 3px 0px #a1a1aa;
+        }
         .next-btn {
             background-color: #89B0AE;
             color: white;
@@ -96,7 +101,7 @@
 
             <!-- Options -->
             <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <p class="text-center col-span-full">正在加载语音引擎...</p>
+                <!-- Questions will be rendered here immediately -->
             </div>
             
             <!-- Feedback -->
@@ -154,7 +159,6 @@
 
         // --- 4. Các hàm chức năng cốt lõi ---
 
-        /** Trộn một mảng (thuật toán Fisher-Yates) */
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -163,11 +167,9 @@
             return array;
         }
 
-        /** Phát âm một đoạn văn bản */
         function speak(text) {
             if (!text || !gameState.voice) return;
-            
-            speechSynthesis.cancel(); // Hủy các lần đọc trước
+            speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.voice = gameState.voice;
             utterance.lang = gameState.voice.lang;
@@ -175,25 +177,102 @@
             speechSynthesis.speak(utterance);
         }
         
-        /** Tạo ra các đáp án sai để gây nhiễu */
+        // CẬP NHẬT: Thuật toán tạo đáp án sai thông minh hơn
         function generateDistractors(word) {
-            // (Giữ nguyên logic tạo đáp án sai vì nó đã hoạt động tốt)
             const distractors = new Set();
-            const replacements = { 's': 'x', 'x': 's', 'tr': 'ch', 'ch': 'tr', 'd': 'gi', 'gi': 'd', 'r': 'd', 'l': 'n', 'n': 'l', 'i': 'y', 'y': 'i', 'au': 'âu', 'âu': 'au', 'ay': 'ây', 'ây': 'ay' };
-            while (distractors.size < 3) {
+            const MAX_ATTEMPTS = 100;
+            let attempts = 0;
+
+            const originalParts = word.split(' ');
+
+            const toneMap = { 'a': ['á', 'à', 'ả', 'ã', 'ạ'], 'ă': ['ắ', 'ằ', 'ẳ', 'ẵ', 'ặ'], 'â': ['ấ', 'ầ', 'ẩ', 'ẫ', 'ậ'], 'e': ['é', 'è', 'ẻ', 'ẽ', 'ẹ'], 'ê': ['ế', 'ề', 'ể', 'ễ', 'ệ'], 'i': ['í', 'ì', 'ỉ', 'ĩ', 'ị'], 'o': ['ó', 'ò', 'ỏ', 'õ', 'ọ'], 'ô': ['ố', 'ồ', 'ổ', 'ỗ', 'ộ'], 'ơ': ['ớ', 'ờ', 'ở', 'ỡ', 'ợ'], 'u': ['ú', 'ù', 'ủ', 'ũ', 'ụ'], 'ư': ['ứ', 'ừ', 'ử', 'ữ', 'ự'], 'y': ['ý', 'ỳ', 'ỷ', 'ỹ', 'ỵ'] };
+            const initialConsonants = { 's': 'x', 'x': 's', 'tr': 'ch', 'ch': 'tr', 'd': 'gi', 'gi': 'd', 'r': 'gi', 'l': 'n', 'n': 'l' };
+            const finalConsonants = { 'n': 'ng', 'ng': 'n', 't': 'c', 'c': 't', 'm': 'n', 'p': 't' };
+            const vowelGroups = { 'ươi': 'uoi', 'uoi': 'ươi', 'iêu': 'iu', 'iu': 'iêu', 'yêu': 'iêu', 'ua': 'oa', 'oa': 'ua' };
+
+            while (distractors.size < 3 && attempts < MAX_ATTEMPTS) {
+                let currentParts = [...originalParts];
                 let newWord = word;
-                for (const key in replacements) {
-                    if (newWord.includes(key) && Math.random() > 0.5) {
-                        newWord = newWord.replace(new RegExp(key, 'g'), replacements[key]);
-                        if (newWord !== word) break;
+                const strategy = Math.random();
+
+                const partIndex = Math.floor(Math.random() * currentParts.length);
+                let partToChange = currentParts[partIndex];
+                let changed = false;
+
+                if (strategy < 0.4) { // Lỗi Dấu Thanh
+                    let chars = Array.from(partToChange);
+                    let vowelIndices = [];
+                    chars.forEach((char, index) => {
+                        const normalized = char.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        if (toneMap[normalized]) vowelIndices.push(index);
+                    });
+                    if (vowelIndices.length > 0) {
+                        const indexToChange = vowelIndices[Math.floor(Math.random() * vowelIndices.length)];
+                        const originalChar = chars[indexToChange];
+                        const baseChar = originalChar.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        const possibleTones = toneMap[baseChar].filter(c => c !== originalChar);
+                        if (possibleTones.length > 0) {
+                            chars[indexToChange] = possibleTones[Math.floor(Math.random() * possibleTones.length)];
+                            currentParts[partIndex] = chars.join('');
+                            changed = true;
+                        }
+                    }
+                } else if (strategy < 0.7) { // Lỗi Phụ Âm Đầu
+                    for (const [key, value] of Object.entries(initialConsonants)) {
+                        if (partToChange.startsWith(key)) {
+                            currentParts[partIndex] = value + partToChange.substring(key.length);
+                            changed = true;
+                            break;
+                        }
+                    }
+                } else { // Lỗi Vần hoặc Phụ Âm Cuối
+                    for (const [key, value] of Object.entries(vowelGroups)) {
+                        if (partToChange.includes(key)) {
+                            currentParts[partIndex] = partToChange.replace(key, value);
+                            changed = true;
+                            break;
+                        }
+                    }
+                    if (!changed) {
+                        for (const [key, value] of Object.entries(finalConsonants)) {
+                            if (partToChange.endsWith(key)) {
+                                currentParts[partIndex] = partToChange.substring(0, partToChange.length - key.length) + value;
+                                changed = true;
+                                break;
+                            }
+                        }
                     }
                 }
-                if (newWord !== word) distractors.add(newWord);
+
+                if (changed) {
+                    newWord = currentParts.join(' ');
+                    if (newWord !== word) {
+                        distractors.add(newWord);
+                    }
+                }
+                attempts++;
             }
+            
+            // Nếu vẫn không đủ, dùng một phương pháp đơn giản hơn làm dự phòng
+            while (distractors.size < 3 && attempts < MAX_ATTEMPTS * 2) {
+                 let tempWord = word;
+                 const oldReplacements = { 's': 'x', 'x': 's', 'tr': 'ch', 'ch': 'tr', 'd': 'gi', 'gi': 'd', 'r': 'd', 'l': 'n', 'n': 'l', 'i': 'y', 'y': 'i', 'au': 'âu', 'âu': 'au', 'ay': 'ây', 'ây': 'ay' };
+                 const keys = shuffle(Object.keys(oldReplacements));
+                 for (const key of keys) {
+                     if (tempWord.includes(key)) {
+                         tempWord = tempWord.replace(key, oldReplacements[key]);
+                         break; // Chỉ thay đổi một lỗi mỗi lần
+                     }
+                 }
+                 if (tempWord !== word) {
+                     distractors.add(tempWord);
+                 }
+                 attempts++;
+            }
+
             return Array.from(distractors);
         }
 
-        /** Hiển thị câu hỏi hiện tại lên giao diện */
         function renderQuestion() {
             optionsContainer.innerHTML = '';
             feedbackEl.textContent = '';
@@ -216,7 +295,6 @@
             scoreEl.textContent = `分数: ${gameState.score}`;
         }
 
-        /** Xử lý khi người dùng chọn một đáp án */
         function handleAnswer(selectedOption, buttonEl) {
             const allButtons = optionsContainer.querySelectorAll('button');
             allButtons.forEach(btn => btn.disabled = true);
@@ -241,24 +319,22 @@
             nextBtn.classList.remove('hidden');
         }
 
-        /** Chuyển sang câu hỏi tiếp theo hoặc kết thúc game */
         function nextQuestion() {
             gameState.currentWordIndex++;
             if (gameState.currentWordIndex < words.length) {
                 renderQuestion();
+                setTimeout(() => speak(gameState.correctAnswer), 100);
             } else {
                 showResults();
             }
         }
 
-        /** Hiển thị màn hình kết quả */
         function showResults() {
             quizArea.classList.add('hidden');
             resultScreen.classList.remove('hidden');
             finalScoreEl.textContent = `你的最终分数是：${gameState.score} / ${words.length}`;
         }
         
-        /** Thiết lập lại và bắt đầu một lượt chơi mới */
         function startGame() {
             gameState.shuffledWords = shuffle([...words]);
             gameState.currentWordIndex = 0;
@@ -268,38 +344,27 @@
             resultScreen.classList.add('hidden');
             
             renderQuestion();
-            speakBtn.disabled = false;
-            
-            // Tự động đọc từ đầu tiên
-            setTimeout(() => speak(gameState.correctAnswer), 300);
         }
 
         // --- 5. Logic Khởi tạo ---
 
-        /** Hàm "giám sát" chủ động kiểm tra giọng đọc */
         function initializeSpeechSynthesis() {
             let voices = speechSynthesis.getVoices();
 
-            // Nếu danh sách giọng đọc chưa có, tiếp tục kiểm tra lại sau 100ms
             if (voices.length === 0) {
-                setTimeout(initializeSpeechSynthesis, 100);
+                setTimeout(initializeSpeechSynthesis, 50);
                 return;
             }
             
-            // Ưu tiên giọng vi-VN
             const desiredLangs = ['vi-VN', 'vi_VN'];
-            let foundVoice = voices.find(v => desiredLangs.includes(v.lang));
-
-            // Nếu không có, dùng bất kỳ giọng tiếng Việt nào, hoặc giọng đầu tiên
-            if (!foundVoice) {
-                foundVoice = voices.find(v => v.lang.startsWith('vi')) || voices[0];
+            let foundVoice = voices.find(v => desiredLangs.includes(v.lang)) || voices.find(v => v.lang.startsWith('vi')) || voices[0];
+            
+            if (foundVoice) {
+                gameState.voice = foundVoice;
+                speakBtn.disabled = false;
+                console.log("Voice ready:", gameState.voice.name);
+                speak(gameState.correctAnswer);
             }
-            
-            gameState.voice = foundVoice;
-            console.log("Voice ready:", gameState.voice.name);
-            
-            // Chỉ khi đã có giọng đọc, mới bắt đầu trò chơi
-            startGame();
         }
 
         // --- 6. Gắn các sự kiện ---
@@ -308,8 +373,10 @@
         restartBtn.addEventListener('click', startGame);
 
         // --- 7. Bắt đầu ứng dụng ---
-        // Bắt đầu quá trình "giám sát" ngay khi trang được tải
-        document.addEventListener('DOMContentLoaded', initializeSpeechSynthesis);
+        document.addEventListener('DOMContentLoaded', () => {
+            startGame(); 
+            initializeSpeechSynthesis(); 
+        });
 
     </script>
 </body>
