@@ -13,6 +13,15 @@
         .zh-text {
             font-family: 'Noto Sans SC', sans-serif;
         }
+        /* Pinyin styling */
+        .pinyin {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.85rem;
+            color: #6b7280; /* gray-500 */
+            font-weight: 400;
+            margin-bottom: -2px;
+            display: block;
+        }
         @media print {
             .no-print {
                 display: none !important;
@@ -35,6 +44,10 @@
             }
             .bg-gray-50 {
                 background-color: white !important;
+            }
+            /* Ensure pinyin prints clearly */
+            .pinyin {
+                color: #555; 
             }
         }
     </style>
@@ -79,32 +92,32 @@
                 <div class="space-y-4">
                     <!-- Q1 -->
                     <div class="bg-gray-50 p-4 rounded">
+                        <span class="pinyin ml-1">Wǒ qù ... jì xìn.</span>
                         <label class="block mb-2 zh-text text-lg">1. 我去 <input type="text" name="a1" class="border-b-2 border-gray-400 outline-none bg-transparent text-center w-32 text-teal-700 font-bold mx-1 px-1" autocomplete="off"> 寄信。</label>
-                        <div class="text-xs text-gray-500">Gợi ý: wǒ qù ... jì xìn</div>
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q2 -->
                     <div class="bg-gray-50 p-4 rounded">
+                        <span class="pinyin ml-1">Jīntiān shì ... , yínháng bù gōngzuò.</span>
                         <label class="block mb-2 zh-text text-lg">2. 今天是 <input type="text" name="a2" class="border-b-2 border-gray-400 outline-none bg-transparent text-center w-32 text-teal-700 font-bold mx-1 px-1" autocomplete="off"> ，银行不工作。</label>
-                        <div class="text-xs text-gray-500">Gợi ý: jīn tiān shì ... , yín háng bù gōng zuò</div>
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q3 -->
                     <div class="bg-gray-50 p-4 rounded">
+                        <span class="pinyin ml-1">Wǒ yào qù ... qǔ qián.</span>
                         <label class="block mb-2 zh-text text-lg">3. 我要去 <input type="text" name="a3" class="border-b-2 border-gray-400 outline-none bg-transparent text-center w-32 text-teal-700 font-bold mx-1 px-1" autocomplete="off"> 取钱。</label>
-                        <div class="text-xs text-gray-500">Gợi ý: wǒ yào qù ... qǔ qián</div>
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q4 -->
                     <div class="bg-gray-50 p-4 rounded">
+                        <span class="pinyin ml-1">Yí gè ... .</span>
                         <label class="block mb-2 zh-text text-lg">4. 一个 <input type="text" name="a4" class="border-b-2 border-gray-400 outline-none bg-transparent text-center w-32 text-teal-700 font-bold mx-1 px-1" autocomplete="off"> 。</label>
-                        <div class="text-xs text-gray-500">Gợi ý: yí gè ... (người/vật)</div>
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q5 -->
                     <div class="bg-gray-50 p-4 rounded">
+                        <span class="pinyin ml-1">Wǒ zài zhè ge ... xuéxí.</span>
                         <label class="block mb-2 zh-text text-lg">5. 我在这个 <input type="text" name="a5" class="border-b-2 border-gray-400 outline-none bg-transparent text-center w-32 text-teal-700 font-bold mx-1 px-1" autocomplete="off"> 学习。</label>
-                        <div class="text-xs text-gray-500">Gợi ý: wǒ zài zhè ge ... xué xí</div>
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                 </div>
@@ -118,30 +131,35 @@
                 <div class="space-y-6">
                     <!-- Q1 -->
                     <div>
+                        <span class="pinyin">Qián / yínháng / nǐ / ma / qù / qǔ</span>
                         <p class="zh-text text-lg mb-1">1. 钱 / 银行 / 你 / 吗 / 去 / 取</p>
                         <input type="text" name="b1" class="w-full p-2 border border-gray-300 rounded zh-text focus:border-teal-500" placeholder="Nhập câu trả lời...">
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q2 -->
                     <div>
+                        <span class="pinyin">Wǒ / yóujú / xìn / jì</span>
                         <p class="zh-text text-lg mb-1">2. 我 / 邮局 / 信 / 寄</p>
                         <input type="text" name="b2" class="w-full p-2 border border-gray-300 rounded zh-text focus:border-teal-500" placeholder="Nhập câu trả lời...">
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q3 -->
                     <div>
+                        <span class="pinyin">Wǒ / Màikè / lǎoshī / xuéxiào / shì / de</span>
                         <p class="zh-text text-lg mb-1">3. 我 / 麦克 / 老师 / 学校 / 是 / 的</p>
                         <input type="text" name="b3" class="w-full p-2 border border-gray-300 rounded zh-text focus:border-teal-500" placeholder="Nhập câu trả lời...">
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q4 -->
                     <div>
+                        <span class="pinyin">Xīngqī / qù / Běijīng / wǒ / nǐ / ma / èr / qù</span>
                         <p class="zh-text text-lg mb-1">4. 星期 / 去 / 北京 / 我 / 你 / 吗 / 二 / 去</p>
                         <input type="text" name="b4" class="w-full p-2 border border-gray-300 rounded zh-text focus:border-teal-500" placeholder="Nhập câu trả lời...">
                         <div class="feedback hidden mt-2 text-sm"></div>
                     </div>
                     <!-- Q5 -->
                     <div>
+                        <span class="pinyin">Ma / gōngzuò / nín / qǐng / qǐng / jìn / hǎo / zuò / máng</span>
                         <p class="zh-text text-lg mb-1">5. 吗 / 工作 / 您 / 请 / 请 / 进 / 好 / 坐 / 忙</p>
                         <input type="text" name="b5" class="w-full p-2 border border-gray-300 rounded zh-text focus:border-teal-500" placeholder="Nhập câu trả lời...">
                         <div class="feedback hidden mt-2 text-sm"></div>
@@ -189,7 +207,8 @@
                         <p class="mb-2">1. Chủ nhật tuần này bạn có bận không? Bạn không bận tụi mình đi uống trà sữa, tôi bao.</p>
                         <textarea name="d1" rows="2" class="w-full p-2 border border-gray-300 rounded zh-text" placeholder="Dịch sang tiếng Trung..."></textarea>
                         <div class="feedback hidden mt-2 text-sm text-teal-700 bg-teal-50 p-2 rounded border border-teal-200">
-                            <strong>Gợi ý:</strong> 这周日你忙吗？你不忙的话我们去喝奶茶，我请客。
+                            <strong>Gợi ý:</strong> 这周日你忙吗？你不忙的话我们去喝奶茶，我请客。<br>
+                            <span class="text-xs text-gray-500 italic">Zhè zhōu rì nǐ máng ma? Nǐ bù máng de huà wǒmen qù hē nǎichá, wǒ qǐngkè.</span>
                         </div>
                     </div>
                     <!-- D2 -->
@@ -197,7 +216,8 @@
                         <p class="mb-2">2. Một tuần tôi học tiếng Trung ba ngày, thứ hai, thứ tư và thứ sáu.</p>
                         <textarea name="d2" rows="2" class="w-full p-2 border border-gray-300 rounded zh-text" placeholder="Dịch sang tiếng Trung..."></textarea>
                         <div class="feedback hidden mt-2 text-sm text-teal-700 bg-teal-50 p-2 rounded border border-teal-200">
-                            <strong>Gợi ý:</strong> 我一个星期学三天汉语，星期一、星期三和星期五。
+                            <strong>Gợi ý:</strong> 我一个星期学三天汉语，星期一、星期三和星期五。<br>
+                            <span class="text-xs text-gray-500 italic">Wǒ yí gè xīngqī xué sān tiān Hànyǔ, xīngqī yī, xīngqī sān hé xīngqī wǔ.</span>
                         </div>
                     </div>
                     <!-- D3 -->
@@ -205,11 +225,13 @@
                         <p class="mb-2">3. Ngày mai là chủ nhật, ngân hàng không làm việc. Tôi không thể đi ngân hàng rút tiền.</p>
                         <textarea name="d3" rows="2" class="w-full p-2 border border-gray-300 rounded zh-text" placeholder="Dịch sang tiếng Trung..."></textarea>
                         <div class="feedback hidden mt-2 text-sm text-teal-700 bg-teal-50 p-2 rounded border border-teal-200">
-                            <strong>Gợi ý:</strong> 明天是周日，银行不工作。我不能去银行取钱。
+                            <strong>Gợi ý:</strong> 明天是周日，银行不工作。我不能去银行取钱。<br>
+                            <span class="text-xs text-gray-500 italic">Míngtiān shì zhōurì, yínháng bù gōngzuò. Wǒ bù néng qù yínháng qǔ qián.</span>
                         </div>
                     </div>
                     <!-- D4 -->
                     <div>
+                        <span class="pinyin">Zhōu liù hé zhōu rì wǒ zài Nǐ Hǎo xuéxiào xuéxí Hànyǔ.</span>
                         <p class="zh-text text-lg mb-2">4. 周六和周日我在你好学校学习汉语。</p>
                         <textarea name="d4" rows="2" class="w-full p-2 border border-gray-300 rounded" placeholder="Dịch sang tiếng Việt..."></textarea>
                         <div class="feedback hidden mt-2 text-sm text-teal-700 bg-teal-50 p-2 rounded border border-teal-200">
@@ -218,6 +240,7 @@
                     </div>
                     <!-- D5 -->
                     <div>
+                        <span class="pinyin">Xièxie nǐ qǐng wǒ hē chá, nǐ de gōngzuò máng ma?</span>
                         <p class="zh-text text-lg mb-2">5. 谢谢你请我喝茶，你的工作忙吗？</p>
                         <textarea name="d5" rows="2" class="w-full p-2 border border-gray-300 rounded" placeholder="Dịch sang tiếng Việt..."></textarea>
                         <div class="feedback hidden mt-2 text-sm text-teal-700 bg-teal-50 p-2 rounded border border-teal-200">
@@ -338,7 +361,6 @@
             }
 
             // Show Feedback for C, D (Subjective)
-            // Simplified selector now that Part E is gone
             const subjectiveFeedbacks = document.querySelectorAll('textarea ~ .feedback');
             subjectiveFeedbacks.forEach(el => el.classList.remove('hidden'));
 
