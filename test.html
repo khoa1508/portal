@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中文学习互动教室 - Lớp học tiếng Trung tương tác</title>
+    <title>Lớp học tiếng Trung tương tác</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -31,12 +31,12 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            border: 3px solid #d32f2f; /* 中国红边框 */
+            border: 3px solid #d32f2f;
         }
 
         /* 头部样式 */
         header {
-            background: linear-gradient(to right, #d32f2f, #f44336); /* 中国红渐变 */
+            background: linear-gradient(to right, #d32f2f, #f44336);
             color: white;
             padding: 25px 30px;
             text-align: center;
@@ -54,16 +54,6 @@
             font-size: 2.5rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .language-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 15px;
-        }
-
-        .chinese-title {
-            font-weight: bold;
         }
 
         .vietnamese-title {
@@ -95,7 +85,7 @@
         .right-panel {
             flex: 2;
             padding: 30px;
-            background-color: #fffef7; /* 浅黄色背景 */
+            background-color: #fffef7;
             display: flex;
             flex-direction: column;
         }
@@ -107,10 +97,10 @@
 
         .panel-title {
             font-size: 1.8rem;
-            color: #d32f2f; /* 中国红 */
+            color: #d32f2f;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #ffd54f; /* 黄色 */
+            border-bottom: 2px solid #ffd54f;
             display: flex;
             align-items: center;
         }
@@ -131,7 +121,7 @@
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border: 2px solid #ffd54f; /* 黄色边框 */
+            border: 2px solid #ffd54f;
         }
 
         .input-group {
@@ -434,6 +424,16 @@
 
         .message-content {
             margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        /* 拼音样式 */
+        .pinyin {
+            font-size: 0.85rem;
+            color: #d32f2f;
+            margin-bottom: 5px;
+            font-style: italic;
+            line-height: 1.4;
         }
 
         .message-translation {
@@ -442,6 +442,7 @@
             border-top: 1px dashed rgba(0, 0, 0, 0.1);
             padding-top: 8px;
             margin-top: 8px;
+            line-height: 1.4;
         }
 
         .message-time {
@@ -520,14 +521,21 @@
             cursor: not-allowed;
         }
 
-        .option-text {
+        .option-chinese {
             font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .option-pinyin {
+            font-size: 0.85rem;
+            color: #d32f2f;
+            margin-bottom: 5px;
+            font-style: italic;
         }
 
         .option-translation {
             font-size: 0.85rem;
             color: #666;
-            margin-top: 3px;
         }
 
         /* 用户列表 */
@@ -650,14 +658,11 @@
         <header>
             <div class="header-content">
                 <h1>
-                    <span class="chinese-title">中文学习互动教室</span>
-                    <br>
                     <span class="vietnamese-title">Lớp học tiếng Trung tương tác</span>
                 </h1>
-                <div class="language-subtitle">买卖水果角色扮演 / Diễn vai mua bán trái cây</div>
                 <div class="firebase-status" id="firebaseStatus">
                     <i class="fas fa-circle" style="color: #ccc; margin-right: 5px;"></i>
-                    <span>连接状态: 正在连接... / Trạng thái: Đang kết nối...</span>
+                    <span>Trạng thái: Đang kết nối...</span>
                 </div>
             </div>
         </header>
@@ -669,24 +674,24 @@
                 <div class="panel" id="roomInputPanel">
                     <div class="panel-title">
                         <i class="fas fa-door-open"></i>
-                        <span>进入教室 / Vào lớp học</span>
+                        <span>Vào lớp học</span>
                     </div>
                     <div class="panel-subtitle">
-                        请输入房间号加入教室 / Vui lòng nhập mã phòng để tham gia lớp học
+                        Vui lòng nhập mã phòng để tham gia lớp học
                     </div>
                     <div class="room-input-section">
                         <div class="input-group">
-                            <div class="input-label">房间号 / Mã phòng:</div>
-                            <input type="text" class="input-field" id="roomCodeInput" placeholder="例如: CN01 / Ví dụ: CN01" maxlength="10">
+                            <div class="input-label">Mã phòng:</div>
+                            <input type="text" class="input-field" id="roomCodeInput" placeholder="Ví dụ: CN01" maxlength="10">
                         </div>
                         <div class="input-group">
-                            <div class="input-label">用户名 / Tên người dùng:</div>
-                            <input type="text" class="input-field" id="userNameInput" placeholder="请输入用户名 / Vui lòng nhập tên" maxlength="20">
+                            <div class="input-label">Tên người dùng:</div>
+                            <input type="text" class="input-field" id="userNameInput" placeholder="Vui lòng nhập tên" maxlength="20">
                         </div>
                         <div class="text-center mt-20">
                             <button class="btn" id="joinRoomBtn">
                                 <i class="fas fa-sign-in-alt"></i>
-                                <span>进入教室 / Vào lớp học</span>
+                                <span>Vào lớp học</span>
                             </button>
                         </div>
                     </div>
@@ -696,36 +701,34 @@
                 <div class="panel hidden" id="roleSelectionPanel">
                     <div class="panel-title">
                         <i class="fas fa-user-friends"></i>
-                        <span>选择角色 / Chọn vai trò</span>
+                        <span>Chọn vai trò</span>
                     </div>
                     <div class="panel-subtitle">
-                        请选择一个角色开始对话 / Vui lòng chọn một vai trò để bắt đầu hội thoại
+                        Vui lòng chọn một vai trò để bắt đầu hội thoại
                     </div>
                     <div class="role-selection">
                         <div class="role-card" id="buyerRoleCard" data-role="buyer">
                             <div class="role-icon">
                                 <i class="fas fa-shopping-basket"></i>
                             </div>
-                            <div class="role-name">买家 / Người mua</div>
+                            <div class="role-name">Người mua (A)</div>
                             <div class="role-description">
-                                必须买至少3种水果；必须讲价；付款时给大面额钞票<br>
                                 Mua ít nhất 3 loại; phải trả giá; đưa tiền mệnh giá lớn
                             </div>
                             <div class="role-status status-available" id="buyerStatus">
-                                可选 / Có thể chọn
+                                Có thể chọn
                             </div>
                         </div>
                         <div class="role-card" id="sellerRoleCard" data-role="seller">
                             <div class="role-icon">
                                 <i class="fas fa-store"></i>
                             </div>
-                            <div class="role-name">卖家 / Người bán</div>
+                            <div class="role-name">Người bán (B)</div>
                             <div class="role-description">
-                                必须推荐其他水果；态度热情；感谢顾客<br>
                                 Gợi ý thêm; nhiệt tình; cảm ơn khách hàng
                             </div>
                             <div class="role-status status-available" id="sellerStatus">
-                                可选 / Có thể chọn
+                                Có thể chọn
                             </div>
                         </div>
                     </div>
@@ -734,10 +737,10 @@
                     <div class="scenario-selection hidden" id="scenarioSelection">
                         <div class="panel-title">
                             <i class="fas fa-scroll"></i>
-                            <span>选择情景 / Chọn tình huống</span>
+                            <span>Chọn tình huống</span>
                         </div>
                         <div class="panel-subtitle">
-                            选择一个情景开始练习 / Chọn một tình huống để bắt đầu luyện tập
+                            Chọn một tình huống để bắt đầu luyện tập
                         </div>
                         <div class="scenario-list" id="scenarioList">
                             <!-- 情景列表将动态生成 -->
@@ -747,7 +750,7 @@
                     <div class="text-center mt-20">
                         <button class="btn btn-secondary" id="leaveRoomBtn">
                             <i class="fas fa-sign-out-alt"></i>
-                            <span>离开房间 / Rời phòng</span>
+                            <span>Rời phòng</span>
                         </button>
                     </div>
                 </div>
@@ -756,7 +759,7 @@
                 <div class="user-list hidden" id="userListPanel">
                     <div class="user-list-title">
                         <i class="fas fa-users"></i>
-                        <span>在线用户 / Người dùng trực tuyến</span>
+                        <span>Người dùng trực tuyến</span>
                     </div>
                     <div id="userList">
                         <!-- 用户列表将动态生成 -->
@@ -770,26 +773,25 @@
                 <div class="panel hidden" id="chatPanel">
                     <div class="panel-title">
                         <i class="fas fa-comments"></i>
-                        <span>对话练习 / Luyện tập hội thoại</span>
+                        <span>Luyện tập hội thoại</span>
                     </div>
                     <div class="panel-subtitle" id="chatSubtitle">
-                        请选择一个角色开始对话 / Vui lòng chọn một vai trò để bắt đầu hội thoại
+                        Vui lòng chọn một vai trò để bắt đầu hội thoại
                     </div>
                     <div class="chat-container">
                         <div class="chat-header">
                             <div class="chat-info">
                                 <i class="fas fa-comment-dots"></i>
-                                <span>实时对话 / Hội thoại thời gian thực</span>
+                                <span>Hội thoại thời gian thực</span>
                             </div>
                             <div class="chat-info">
-                                <span>房间 / Phòng:</span>
+                                <span>Phòng:</span>
                                 <div class="room-code-display" id="currentRoomCode">---</div>
                             </div>
                         </div>
                         <div class="chat-messages" id="chatMessages">
                             <div class="message message-system">
-                                <div class="message-content">欢迎来到中文学习互动教室！请先加入房间并选择角色和情景。</div>
-                                <div class="message-translation">Chào mừng đến với lớp học tiếng Trung tương tác! Hãy tham gia phòng và chọn vai trò, tình huống trước.</div>
+                                <div class="message-content">Chào mừng đến với lớp học tiếng Trung tương tác! Hãy tham gia phòng và chọn vai trò, tình huống trước.</div>
                             </div>
                         </div>
                     </div>
@@ -798,7 +800,7 @@
                     <div class="dialogue-options hidden" id="dialogueOptions">
                         <div class="dialogue-header">
                             <i class="fas fa-keyboard"></i>
-                            <span>请选择对话选项 / Vui lòng chọn tùy chọn hội thoại</span>
+                            <span>Vui lòng chọn tùy chọn hội thoại</span>
                         </div>
                         <div id="optionsContainer">
                             <!-- 选项将动态生成 -->
@@ -810,30 +812,28 @@
                 <div class="panel" id="waitingPanel">
                     <div class="panel-title">
                         <i class="fas fa-hourglass-half"></i>
-                        <span>等待加入 / Đang chờ tham gia</span>
+                        <span>Đang chờ tham gia</span>
                     </div>
                     <div class="panel-subtitle">
-                        请先加入房间开始学习 / Vui lòng tham gia phòng để bắt đầu học
+                        Vui lòng tham gia phòng để bắt đầu học
                     </div>
                     <div class="flex-center" style="height: 400px;">
                         <div class="text-center">
                             <div class="role-icon" style="font-size: 5rem; margin-bottom: 30px;">
                                 <i class="fas fa-shopping-basket"></i>
                             </div>
-                            <h2 style="color: #d32f2f; margin-bottom: 20px;">买卖水果角色扮演</h2>
+                            <h2 style="color: #d32f2f; margin-bottom: 20px;">Diễn vai mua bán trái cây</h2>
                             <p style="color: #666; margin-bottom: 30px; max-width: 500px;">
-                                这是一个供两名学生使用的角色扮演模拟环境，通过选择句子完成对话练习。
-                                <br>
                                 Đây là môi trường mô phỏng đóng vai cho hai học sinh, hoàn thành bài tập hội thoại bằng cách chọn câu.
                             </p>
                             <p style="color: #d32f2f; font-weight: bold;">
-                                使用说明 / Hướng dẫn sử dụng:
+                                Hướng dẫn sử dụng:
                             </p>
                             <ol style="text-align: left; display: inline-block; margin-top: 15px; color: #666;">
-                                <li>输入房间号和用户名 / Nhập mã phòng và tên người dùng</li>
-                                <li>选择买家或卖家角色 / Chọn vai trò người mua hoặc người bán</li>
-                                <li>选择一个情景练习 / Chọn một tình huống để luyện tập</li>
-                                <li>通过选择选项完成对话 / Hoàn thành hội thoại bằng cách chọn tùy chọn</li>
+                                <li>Nhập mã phòng và tên người dùng</li>
+                                <li>Chọn vai trò người mua hoặc người bán</li>
+                                <li>Chọn một tình huống để luyện tập</li>
+                                <li>Hoàn thành hội thoại bằng cách chọn tùy chọn</li>
                             </ol>
                         </div>
                     </div>
@@ -843,9 +843,9 @@
 
         <!-- 页脚 -->
         <footer style="padding: 20px; text-align: center; color: #666; border-top: 2px solid #f0f0f0;">
-            <p>实时互动中文学习Web应用 / Ứng dụng Web học tiếng Trung tương tác thời gian thực</p>
-            <p>使用 Firebase 实时数据库 / Sử dụng Firebase Realtime Database</p>
-            <p>© 2023 中文学习互动教室 - Lớp học tiếng Trung tương tác</p>
+            <p>Ứng dụng Web học tiếng Trung tương tác thời gian thực</p>
+            <p>Sử dụng Firebase Realtime Database</p>
+            <p>© 2023 Lớp học tiếng Trung tương tác</p>
         </footer>
     </div>
 
@@ -911,191 +911,156 @@
             currentStep: 0
         };
 
-        // 情景数据
+        // 情景数据 - 带拼音
         const scenarios = {
             1: {
                 id: 1,
-                title: "豪华派对 / Tiệc sang trọng",
-                fruits: "榴莲, 山竹, 樱桃 / Sầu riêng, Măng cụt, Anh đào",
-                description: "为豪华派对准备水果 / Chuẩn bị trái cây cho bữa tiệc sang trọng",
-                buyerTasks: ["买榴莲、山竹和樱桃 / Mua sầu riêng, măng cụt và anh đào"],
-                sellerTasks: ["推荐苹果 / Gợi ý táo"],
+                title: "Tiệc sang trọng",
+                fruits: "榴莲 (sầu riêng), 山竹 (măng cụt), 樱桃 (anh đào)",
+                description: "Chuẩn bị trái cây cho bữa tiệc sang trọng",
+                buyerTasks: ["Mua sầu riêng, măng cụt và anh đào"],
+                sellerTasks: ["Gợi ý táo"],
                 dialogueFlow: [
                     {
                         speaker: "seller",
-                        category: "问候与需求 / Chào hỏi & Nhu cầu",
+                        category: "Chào hỏi & Nhu cầu",
                         options: [
                             { 
                                 chinese: "您好，欢迎光临！您买什么？", 
+                                pinyin: "Nín hǎo, huānyíng guānglín! Nín mǎi shénme?",
                                 vietnamese: "Xin chào, chào mừng quý khách! Quý khách mua gì?" 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "问候与需求 / Chào hỏi & Nhu cầu",
+                        category: "Chào hỏi & Nhu cầu",
                         options: [
                             { 
                                 chinese: "你好。我想买水果。今天的榴莲怎么样？", 
+                                pinyin: "Nǐ hǎo. Wǒ xiǎng mǎi shuǐguǒ. Jīntiān de liúlián zěnmeyàng?",
                                 vietnamese: "Xin chào. Tôi muốn mua trái cây. Sầu riêng hôm nay thế nào?" 
-                            },
-                            { 
-                                chinese: "你好，我想看看水果。榴莲新鲜吗？", 
-                                vietnamese: "Xin chào, tôi muốn xem trái cây. Sầu riêng có tươi không?" 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "今天的榴莲很新鲜，也好吃。您要一个吧？", 
+                                pinyin: "Jīntiān de liúlián hěn xīnxiān, yě hǎochī. Nín yào yī gè ba?",
                                 vietnamese: "Sầu riêng hôm nay rất tươi, cũng rất ngon. Quý khách lấy một quả nhé?" 
-                            },
-                            { 
-                                chinese: "榴莲今天刚到，非常新鲜，来一个吧？", 
-                                vietnamese: "Sầu riêng mới đến hôm nay, rất tươi, lấy một quả nhé?" 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "榴莲怎么卖？", 
+                                pinyin: "Liúlián zěnme mài?",
                                 vietnamese: "Sầu riêng bán thế nào?" 
-                            },
-                            { 
-                                chinese: "榴莲多少钱一斤？", 
-                                vietnamese: "Sầu riêng bao nhiêu tiền một cân?" 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "二十五块一斤。", 
+                                pinyin: "Èrshíwǔ kuài yī jīn.",
                                 vietnamese: "25 đồng một cân." 
-                            },
-                            { 
-                                chinese: "今天特价，二十五块一斤。", 
-                                vietnamese: "Hôm nay giảm giá, 25 đồng một cân." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "讲价 / Trả giá",
+                        category: "Trả giá",
                         options: [
                             { 
                                 chinese: "二十五块？太贵了！便宜点儿吧。", 
+                                pinyin: "Èrshíwǔ kuài? Tài guì le! Piányí diǎn er ba.",
                                 vietnamese: "25 đồng? Đắt quá! Rẻ chút đi." 
-                            },
-                            { 
-                                chinese: "这么贵啊？能不能便宜点？", 
-                                vietnamese: "Đắt thế ư? Có thể rẻ một chút không?" 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "讲价 / Trả giá",
+                        category: "Trả giá",
                         options: [
                             { 
                                 chinese: "那二十三块吧，这是最好的榴莲。", 
+                                pinyin: "Nà èrshísān kuài ba, zhè shì zuì hǎo de liúlián.",
                                 vietnamese: "Vậy 23 đồng nhé, đây là sầu riêng ngon nhất." 
-                            },
-                            { 
-                                chinese: "好吧，二十三块，不能再便宜了。", 
-                                vietnamese: "Được thôi, 23 đồng, không thể rẻ hơn được." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "好吧，来一个。还要两斤山竹和一斤樱桃。一共多少钱？", 
+                                pinyin: "Hǎo ba, lái yī gè. Hái yào liǎng jīn shānzhú hé yī jīn yīngtáo. Yīgòng duōshǎo qián?",
                                 vietnamese: "Được thôi, lấy một quả. Còn muốn 2 cân măng cụt và 1 cân anh đào. Tổng cộng bao nhiêu tiền?" 
-                            },
-                            { 
-                                chinese: "行，要一个榴莲，再加两斤山竹和一斤樱桃。总共多少钱？", 
-                                vietnamese: "Được, lấy một quả sầu riêng, thêm 2 cân măng cụt và 1 cân anh đào. Tổng cộng bao nhiêu tiền?" 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "促销 / Gợi ý thêm",
+                        category: "Gợi ý thêm",
                         options: [
                             { 
                                 chinese: "您还要别的吗？我们还有很好的苹果。", 
+                                pinyin: "Nín hái yào bié de ma? Wǒmen hái yǒu hěn hǎo de píngguǒ.",
                                 vietnamese: "Quý khách còn muốn gì nữa không? Chúng tôi còn có táo rất ngon." 
-                            },
-                            { 
-                                chinese: "还要别的吗？今天的苹果特别甜。", 
-                                vietnamese: "Còn muốn gì nữa không? Táo hôm nay đặc biệt ngọt." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "促销 / Gợi ý thêm",
+                        category: "Gợi ý thêm",
                         options: [
                             { 
                                 chinese: "不用了，谢谢。", 
+                                pinyin: "Bùyòng le, xièxiè.",
                                 vietnamese: "Không cần nữa, cảm ơn." 
-                            },
-                            { 
-                                chinese: "不用了，这些就够了。", 
-                                vietnamese: "Không cần nữa, những thứ này là đủ rồi." 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "结账 / Thanh toán",
+                        category: "Thanh toán",
                         options: [
                             { 
                                 chinese: "一共八十八块。", 
-                                vietnamese: "Tổng cộng 88 đồng." 
-                            },
-                            { 
-                                chinese: "总共八十八块钱。", 
+                                pinyin: "Yīgòng bāshíbā kuài.",
                                 vietnamese: "Tổng cộng 88 đồng." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "结账 / Thanh toán",
+                        category: "Thanh toán",
                         options: [
                             { 
                                 chinese: "给你一百块。", 
+                                pinyin: "Gěi nǐ yībǎi kuài.",
                                 vietnamese: "Đưa bạn 100 đồng." 
-                            },
-                            { 
-                                chinese: "这是一百块。", 
-                                vietnamese: "Đây là 100 đồng." 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "结账 / Thanh toán",
+                        category: "Thanh toán",
                         options: [
                             { 
                                 chinese: "谢谢。这是您的水果，找您十二块。慢走！", 
+                                pinyin: "Xièxiè. Zhè shì nín de shuǐguǒ, zhǎo nín shí'èr kuài. Màn zǒu!",
                                 vietnamese: "Cảm ơn. Đây là trái cây của quý khách, trả lại 12 đồng. Đi từ từ!" 
-                            },
-                            { 
-                                chinese: "谢谢。找您十二块。欢迎下次光临！", 
-                                vietnamese: "Cảm ơn. Trả lại 12 đồng. Chào mừng lần sau lại đến!" 
                             }
                         ]
                     }
@@ -1103,159 +1068,130 @@
             },
             2: {
                 id: 2,
-                title: "夏日生日派对 / Tiệc sinh nhật mùa hè",
-                fruits: "西瓜, 菠萝, 芒果 / Dưa hấu, Dứa, Xoài",
-                description: "为夏日生日派对准备水果 / Chuẩn bị trái cây cho tiệc sinh nhật mùa hè",
-                buyerTasks: ["讲价: 这里的西瓜比隔壁贵 / Trả giá: Dưa hấu ở đây đắt hơn bên cạnh"],
+                title: "Tiệc sinh nhật mùa hè",
+                fruits: "西瓜 (dưa hấu), 菠萝 (dứa), 芒果 (xoài)",
+                description: "Chuẩn bị trái cây cho tiệc sinh nhật mùa hè",
+                buyerTasks: ["Trả giá: Dưa hấu ở đây đắt hơn bên cạnh"],
                 sellerTasks: [],
                 dialogueFlow: [
                     {
                         speaker: "seller",
-                        category: "问候与需求 / Chào hỏi & Nhu cầu",
+                        category: "Chào hỏi & Nhu cầu",
                         options: [
                             { 
                                 chinese: "您好，欢迎光临！您买什么？", 
+                                pinyin: "Nín hǎo, huānyíng guānglín! Nín mǎi shénme?",
                                 vietnamese: "Xin chào, chào mừng quý khách! Quý khách mua gì?" 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "问候与需求 / Chào hỏi & Nhu cầu",
+                        category: "Chào hỏi & Nhu cầu",
                         options: [
                             { 
                                 chinese: "你好。我想买西瓜。", 
+                                pinyin: "Nǐ hǎo. Wǒ xiǎng mǎi xīguā.",
                                 vietnamese: "Xin chào. Tôi muốn mua dưa hấu." 
-                            },
-                            { 
-                                chinese: "你好，今天的西瓜怎么样？", 
-                                vietnamese: "Xin chào, dưa hấu hôm nay thế nào?" 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "今天的西瓜很甜，也很新鲜。", 
+                                pinyin: "Jīntiān de xīguā hěn tián, yě hěn xīnxiān.",
                                 vietnamese: "Dưa hấu hôm nay rất ngọt, cũng rất tươi." 
-                            },
-                            { 
-                                chinese: "西瓜今天特价，很划算。", 
-                                vietnamese: "Dưa hấu hôm nay giảm giá, rất hợp lý." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "西瓜怎么卖？", 
+                                pinyin: "Xīguā zěnme mài?",
                                 vietnamese: "Dưa hấu bán thế nào?" 
-                            },
-                            { 
-                                chinese: "西瓜多少钱一斤？", 
-                                vietnamese: "Dưa hấu bao nhiêu tiền một cân?" 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "十块一斤。", 
+                                pinyin: "Shí kuài yī jīn.",
                                 vietnamese: "10 đồng một cân." 
-                            },
-                            { 
-                                chinese: "今天特价，八块一斤。", 
-                                vietnamese: "Hôm nay giảm giá, 8 đồng một cân." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "讲价 / Trả giá",
+                        category: "Trả giá",
                         options: [
                             { 
                                 chinese: "十块？太贵了！这里的西瓜比隔壁贵。便宜点儿吧。", 
+                                pinyin: "Shí kuài? Tài guì le! Zhèlǐ de xīguā bǐ gé bì guì. Piányí diǎn er ba.",
                                 vietnamese: "10 đồng? Đắt quá! Dưa hấu ở đây đắt hơn bên cạnh. Rẻ chút đi." 
-                            },
-                            { 
-                                chinese: "八块？还是有点贵，再便宜点吧。", 
-                                vietnamese: "8 đồng? Vẫn hơi đắt, rẻ thêm chút nữa đi." 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "讲价 / Trả giá",
+                        category: "Trả giá",
                         options: [
                             { 
                                 chinese: "那八块吧，不能再便宜了。", 
+                                pinyin: "Nà bā kuài ba, bùnéng zài piányí le.",
                                 vietnamese: "Vậy 8 đồng nhé, không thể rẻ hơn được." 
-                            },
-                            { 
-                                chinese: "最低七块，不能再低了。", 
-                                vietnamese: "Thấp nhất 7 đồng, không thể thấp hơn được." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "选购 / Chọn mua",
+                        category: "Chọn mua",
                         options: [
                             { 
                                 chinese: "好吧。我还要菠萝和芒果。一共多少钱？", 
+                                pinyin: "Hǎo ba. Wǒ hái yào bōluó hé mángguǒ. Yīgòng duōshǎo qián?",
                                 vietnamese: "Được thôi. Tôi còn muốn dứa và xoài. Tổng cộng bao nhiêu tiền?" 
-                            },
-                            { 
-                                chinese: "行，那我再要两斤菠萝和一斤芒果。总共多少钱？", 
-                                vietnamese: "Được, vậy tôi muốn thêm 2 cân dứa và 1 cân xoài. Tổng cộng bao nhiêu tiền?" 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "结账 / Thanh toán",
+                        category: "Thanh toán",
                         options: [
                             { 
                                 chinese: "一共四十五块。", 
-                                vietnamese: "Tổng cộng 45 đồng." 
-                            },
-                            { 
-                                chinese: "总共四十五块。", 
+                                pinyin: "Yīgòng sìshíwǔ kuài.",
                                 vietnamese: "Tổng cộng 45 đồng." 
                             }
                         ]
                     },
                     {
                         speaker: "buyer",
-                        category: "结账 / Thanh toán",
+                        category: "Thanh toán",
                         options: [
                             { 
                                 chinese: "给你五十块。", 
+                                pinyin: "Gěi nǐ wǔshí kuài.",
                                 vietnamese: "Đưa bạn 50 đồng." 
-                            },
-                            { 
-                                chinese: "这是五十块。", 
-                                vietnamese: "Đây là 50 đồng." 
                             }
                         ]
                     },
                     {
                         speaker: "seller",
-                        category: "结账 / Thanh toán",
+                        category: "Thanh toán",
                         options: [
                             { 
                                 chinese: "谢谢。找您五块。欢迎下次光临！", 
+                                pinyin: "Xièxiè. Zhǎo nín wǔ kuài. Huānyíng xiàcì guānglín!",
                                 vietnamese: "Cảm ơn. Trả lại 5 đồng. Chào mừng lần sau lại đến!" 
-                            },
-                            { 
-                                chinese: "好的，找您五块。谢谢光临！", 
-                                vietnamese: "Được, trả lại 5 đồng. Cảm ơn quý khách!" 
                             }
                         ]
                     }
@@ -1263,30 +1199,99 @@
             },
             3: {
                 id: 3,
-                title: "看望病人 / Thăm người ốm",
-                fruits: "橙子, 苹果, 葡萄 / Cam, Táo, Nho",
-                description: "买水果看望病人 / Mua trái cây thăm người ốm",
-                buyerTasks: ["讲价: 我买很多，给我批发价吧 / Trả giá: Tôi mua nhiều, bán giá buôn đi"],
+                title: "Thăm người ốm",
+                fruits: "橙子 (cam), 苹果 (táo), 葡萄 (nho)",
+                description: "Mua trái cây thăm người ốm",
+                buyerTasks: ["Trả giá: Tôi mua nhiều, bán giá buôn đi"],
                 sellerTasks: [],
-                dialogueFlow: [] // 简化为与情景2类似结构
+                dialogueFlow: [
+                    {
+                        speaker: "seller",
+                        category: "Chào hỏi & Nhu cầu",
+                        options: [
+                            { 
+                                chinese: "您好，欢迎光临！您买什么？", 
+                                pinyin: "Nín hǎo, huānyíng guānglín! Nín mǎi shénme?",
+                                vietnamese: "Xin chào, chào mừng quý khách! Quý khách mua gì?" 
+                            }
+                        ]
+                    },
+                    {
+                        speaker: "buyer",
+                        category: "Chào hỏi & Nhu cầu",
+                        options: [
+                            { 
+                                chinese: "你好。我想买橙子和苹果。", 
+                                pinyin: "Nǐ hǎo. Wǒ xiǎng mǎi chéngzi hé píngguǒ.",
+                                vietnamese: "Xin chào. Tôi muốn mua cam và táo." 
+                            }
+                        ]
+                    }
+                ]
             },
             4: {
                 id: 4,
-                title: "下午茶 / Tiệc trà chiều",
-                fruits: "草莓, 火龙果, 龙眼 / Dâu tây, Thanh long, Nhãn",
-                description: "为下午茶准备水果 / Chuẩn bị trái cây cho tiệc trà chiều",
+                title: "Tiệc trà chiều",
+                fruits: "草莓 (dâu tây), 火龙果 (thanh long), 龙眼 (nhãn)",
+                description: "Chuẩn bị trái cây cho tiệc trà chiều",
                 buyerTasks: [],
-                sellerTasks: ["夸草莓非常甜 / Khen dâu tây cực kỳ ngọt"],
-                dialogueFlow: [] // 简化为与情景2类似结构
+                sellerTasks: ["Khen dâu tây cực kỳ ngọt"],
+                dialogueFlow: [
+                    {
+                        speaker: "seller",
+                        category: "Chào hỏi & Nhu cầu",
+                        options: [
+                            { 
+                                chinese: "您好，欢迎光临！您买什么？", 
+                                pinyin: "Nín hǎo, huānyíng guānglín! Nín mǎi shénme?",
+                                vietnamese: "Xin chào, chào mừng quý khách! Quý khách mua gì?" 
+                            }
+                        ]
+                    },
+                    {
+                        speaker: "buyer",
+                        category: "Chào hỏi & Nhu cầu",
+                        options: [
+                            { 
+                                chinese: "你好。我想买草莓。", 
+                                pinyin: "Nǐ hǎo. Wǒ xiǎng mǎi cǎoméi.",
+                                vietnamese: "Xin chào. Tôi muốn mua dâu tây." 
+                            }
+                        ]
+                    }
+                ]
             },
             5: {
                 id: 5,
-                title: "儿童聚会 / Tiệc cho trẻ em",
-                fruits: "香蕉, 橘子, 木瓜 / Chuối, Quýt, Đu đủ",
-                description: "为儿童聚会准备水果 / Chuẩn bị trái cây cho tiệc trẻ em",
-                buyerTasks: ["讲价: 把零头抹了吧 / Trả giá: Bớt số lẻ đi"],
+                title: "Tiệc cho trẻ em",
+                fruits: "香蕉 (chuối), 橘子 (quýt), 木瓜 (đu đủ)",
+                description: "Chuẩn bị trái cây cho tiệc trẻ em",
+                buyerTasks: ["Trả giá: Bớt số lẻ đi"],
                 sellerTasks: [],
-                dialogueFlow: [] // 简化为与情景2类似结构
+                dialogueFlow: [
+                    {
+                        speaker: "seller",
+                        category: "Chào hỏi & Nhu cầu",
+                        options: [
+                            { 
+                                chinese: "您好，欢迎光临！您买什么？", 
+                                pinyin: "Nín hǎo, huānyíng guānglín! Nín mǎi shénme?",
+                                vietnamese: "Xin chào, chào mừng quý khách! Quý khách mua gì?" 
+                            }
+                        ]
+                    },
+                    {
+                        speaker: "buyer",
+                        category: "Chào hỏi & Nhu cầu",
+                        options: [
+                            { 
+                                chinese: "你好。我想买香蕉和橘子。", 
+                                pinyin: "Nǐ hǎo. Wǒ xiǎng mǎi xiāngjiāo hé júzi.",
+                                vietnamese: "Xin chào. Tôi muốn mua chuối và quýt." 
+                            }
+                        ]
+                    }
+                ]
             }
         };
 
@@ -1301,17 +1306,17 @@
 
         // 初始化应用
         function initApp() {
-            console.log("初始化应用...");
+            console.log("Khởi tạo ứng dụng...");
             
             // 设置 Firebase 连接状态监听
             const connectedRef = database.ref(".info/connected");
             connectedRef.on("value", function(snap) {
                 if (snap.val() === true) {
                     updateFirebaseStatus(true);
-                    console.log("已连接到 Firebase");
+                    console.log("Đã kết nối với Firebase");
                 } else {
                     updateFirebaseStatus(false);
-                    console.log("已断开与 Firebase 的连接");
+                    console.log("Đã ngắt kết nối với Firebase");
                 }
             });
 
@@ -1324,7 +1329,7 @@
             // 渲染情景列表
             renderScenarioList();
             
-            console.log("应用初始化完成");
+            console.log("Khởi tạo ứng dụng hoàn tất");
         }
 
         // 渲染情景列表
@@ -1344,7 +1349,7 @@
                 
                 scenarioCard.addEventListener('click', () => {
                     if (!currentUser.role) {
-                        alert("请先选择角色 / Vui lòng chọn vai trò trước");
+                        alert("Vui lòng chọn vai trò trước");
                         return;
                     }
                     
@@ -1375,10 +1380,10 @@
             
             if (isConnected) {
                 statusIcon.style.color = '#4caf50';
-                statusText.textContent = "连接状态: 已连接 / Trạng thái: Đã kết nối";
+                statusText.textContent = "Trạng thái: Đã kết nối";
             } else {
                 statusIcon.style.color = '#f44336';
-                statusText.textContent = "连接状态: 已断开 / Trạng thái: Đã ngắt kết nối";
+                statusText.textContent = "Trạng thái: Đã ngắt kết nối";
             }
         }
 
@@ -1396,9 +1401,9 @@
                     roomCodeInput.value = roomData.code;
                     userNameInput.value = userData.name;
                     
-                    console.log("从本地存储恢复会话:", userData, roomData);
+                    console.log("Khôi phục phiên từ bộ nhớ cục bộ:", userData, roomData);
                 } catch (e) {
-                    console.error("恢复会话时出错:", e);
+                    console.error("Lỗi khi khôi phục phiên:", e);
                 }
             }
         }
@@ -1421,26 +1426,26 @@
             const userName = userNameInput.value.trim();
             
             if (!roomCode) {
-                alert("请输入房间号 / Vui lòng nhập mã phòng");
+                alert("Vui lòng nhập mã phòng");
                 roomCodeInput.focus();
                 return;
             }
             
             if (!userName) {
-                alert("请输入用户名 / Vui lòng nhập tên người dùng");
+                alert("Vui lòng nhập tên người dùng");
                 userNameInput.focus();
                 return;
             }
             
             if (roomCode.length < 2) {
-                alert("房间号至少需要2个字符 / Mã phòng cần ít nhất 2 ký tự");
+                alert("Mã phòng cần ít nhất 2 ký tự");
                 roomCodeInput.focus();
                 return;
             }
             
             // 禁用加入按钮
             joinRoomBtn.disabled = true;
-            joinRoomBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>正在加入... / Đang tham gia...</span>';
+            joinRoomBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Đang tham gia...</span>';
             
             // 生成用户ID
             const userId = generateUserId();
@@ -1547,14 +1552,14 @@
                 // 更新UI
                 updateUIAfterJoining();
                 
-                console.log("成功加入房间:", currentRoom.code);
+                console.log("Tham gia phòng thành công:", currentRoom.code);
             }).catch((error) => {
-                console.error("加入房间时出错:", error);
-                alert("加入房间时出错 / Lỗi khi tham gia phòng: " + error.message);
+                console.error("Lỗi khi tham gia phòng:", error);
+                alert("Lỗi khi tham gia phòng: " + error.message);
                 
                 // 重新启用加入按钮
                 joinRoomBtn.disabled = false;
-                joinRoomBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>进入教室 / Vào lớp học</span>';
+                joinRoomBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Vào lớp học</span>';
             });
         }
 
@@ -1573,19 +1578,19 @@
             currentRoomCode.textContent = currentRoom.code;
             
             // 更新聊天副标题
-            chatSubtitle.textContent = `房间: ${currentRoom.code} - 请选择角色 / Phòng: ${currentRoom.code} - Vui lòng chọn vai trò`;
+            chatSubtitle.textContent = `Phòng: ${currentRoom.code} - Vui lòng chọn vai trò`;
             
             // 重新启用加入按钮
             joinRoomBtn.disabled = false;
-            joinRoomBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>进入教室 / Vào lớp học</span>';
+            joinRoomBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Vào lớp học</span>';
             
             // 添加系统消息
-            addSystemMessage(`用户 "${currentUser.name}" 加入了房间 / Người dùng "${currentUser.name}" đã tham gia phòng`);
+            addSystemMessage(`Người dùng "${currentUser.name}" đã tham gia phòng`);
         }
 
         // 离开房间
         function leaveRoom() {
-            if (!confirm("确定要离开房间吗？ / Bạn có chắc chắn muốn rời phòng không?")) {
+            if (!confirm("Bạn có chắc chắn muốn rời phòng không?")) {
                 return;
             }
             
@@ -1605,7 +1610,7 @@
             // 清除本地存储
             clearSession();
             
-            console.log("已离开房间");
+            console.log("Đã rời phòng");
         }
 
         // 重置应用状态
@@ -1649,8 +1654,7 @@
             // 清空聊天消息
             chatMessages.innerHTML = `
                 <div class="message message-system">
-                    <div class="message-content">欢迎来到中文学习互动教室！请先加入房间并选择角色和情景。</div>
-                    <div class="message-translation">Chào mừng đến với lớp học tiếng Trung tương tác! Hãy tham gia phòng và chọn vai trò, tình huống trước.</div>
+                    <div class="message-content">Chào mừng đến với lớp học tiếng Trung tương tác! Hãy tham gia phòng và chọn vai trò, tình huống trước.</div>
                 </div>
             `;
             
@@ -1670,13 +1674,13 @@
         // 选择角色
         function selectRole(role) {
             if (!currentUser.id || !currentRoom.code) {
-                alert("请先加入房间 / Vui lòng tham gia phòng trước");
+                alert("Vui lòng tham gia phòng trước");
                 return;
             }
             
             // 检查角色是否已被选择
             if (currentRoom.roles[role]) {
-                alert("该角色已被选择 / Vai trò này đã được chọn");
+                alert("Vai trò này đã được chọn");
                 return;
             }
             
@@ -1702,15 +1706,15 @@
                         .then(() => {
                             currentUser.role = role;
                             updateUIAfterRoleSelection(role);
-                            addSystemMessage(`用户 "${currentUser.name}" 选择了 ${role === 'buyer' ? '买家' : '卖家'} 角色 / Người dùng "${currentUser.name}" đã chọn vai trò ${role === 'buyer' ? 'người mua' : 'người bán'}`);
+                            addSystemMessage(`Người dùng "${currentUser.name}" đã chọn vai trò ${role === 'buyer' ? 'người mua' : 'người bán'}`);
                             
                             // 显示情景选择
                             scenarioSelection.classList.remove('hidden');
                         });
                 })
                 .catch((error) => {
-                    console.error("分配角色时出错:", error);
-                    alert("分配角色时出错 / Lỗi khi phân vai trò: " + error.message);
+                    console.error("Lỗi khi phân vai trò:", error);
+                    alert("Lỗi khi phân vai trò: " + error.message);
                 });
         }
 
@@ -1729,21 +1733,21 @@
             updateRoleSelectionUI(currentRoom.roles);
             
             // 更新聊天副标题
-            const roleName = role === 'buyer' ? '买家 (Người mua)' : '卖家 (Người bán)';
-            chatSubtitle.textContent = `房间: ${currentRoom.code} - 您的角色: ${roleName} / Phòng: ${currentRoom.code} - Vai trò của bạn: ${roleName}`;
+            const roleName = role === 'buyer' ? 'Người mua' : 'Người bán';
+            chatSubtitle.textContent = `Phòng: ${currentRoom.code} - Vai trò của bạn: ${roleName}`;
             
             // 添加角色提示消息
             if (role === 'buyer') {
-                addSystemMessage("您的角色是买家。请记住: 必须买至少3种水果；必须讲价；付款时给大面额钞票。 / Vai trò của bạn là người mua. Hãy nhớ: Mua ít nhất 3 loại; phải trả giá; đưa tiền mệnh giá lớn.");
+                addSystemMessage("Vai trò của bạn là người mua. Hãy nhớ: Mua ít nhất 3 loại; phải trả giá; đưa tiền mệnh giá lớn.");
             } else {
-                addSystemMessage("您的角色是卖家。请记住: 必须推荐其他水果；态度热情；感谢顾客。 / Vai trò của bạn là người bán. Hãy nhớ: Gợi ý thêm; nhiệt tình; cảm ơn khách hàng.");
+                addSystemMessage("Vai trò của bạn là người bán. Hãy nhớ: Gợi ý thêm; nhiệt tình; cảm ơn khách hàng.");
             }
         }
 
         // 选择情景
         function selectScenario(scenarioId) {
             if (!currentUser.id || !currentUser.role) {
-                alert("请先选择角色 / Vui lòng chọn vai trò trước");
+                alert("Vui lòng chọn vai trò trước");
                 return;
             }
             
@@ -1761,20 +1765,20 @@
                     
                     // 添加系统消息
                     const scenario = scenarios[scenarioId];
-                    addSystemMessage(`已选择情景: ${scenario.title} / Đã chọn tình huống: ${scenario.title}`);
-                    addSystemMessage(`水果: ${scenario.fruits} / Trái cây: ${scenario.fruits}`);
+                    addSystemMessage(`Đã chọn tình huống: ${scenario.title}`);
+                    addSystemMessage(`Trái cây: ${scenario.fruits}`);
                     
                     if (currentUser.role === 'buyer' && scenario.buyerTasks.length > 0) {
-                        addSystemMessage(`买家任务: ${scenario.buyerTasks[0]} / Nhiệm vụ người mua: ${scenario.buyerTasks[0]}`);
+                        addSystemMessage(`Nhiệm vụ người mua: ${scenario.buyerTasks[0]}`);
                     }
                     
                     if (currentUser.role === 'seller' && scenario.sellerTasks.length > 0) {
-                        addSystemMessage(`卖家任务: ${scenario.sellerTasks[0]} / Nhiệm vụ người bán: ${scenario.sellerTasks[0]}`);
+                        addSystemMessage(`Nhiệm vụ người bán: ${scenario.sellerTasks[0]}`);
                     }
                 })
                 .catch((error) => {
-                    console.error("选择情景时出错:", error);
-                    alert("选择情景时出错 / Lỗi khi chọn tình huống: " + error.message);
+                    console.error("Lỗi khi chọn tình huống:", error);
+                    alert("Lỗi khi chọn tình huống: " + error.message);
                 });
         }
 
@@ -1787,13 +1791,13 @@
                 userItem.className = 'user-item';
                 
                 const roleText = userData.role === 'buyer' 
-                    ? '买家 / Người mua' 
+                    ? 'Người mua' 
                     : userData.role === 'seller' 
-                        ? '卖家 / Người bán' 
-                        : '未选择 / Chưa chọn';
+                        ? 'Người bán' 
+                        : 'Chưa chọn';
                 
                 const isCurrentUser = userId === currentUser.id;
-                const userName = isCurrentUser ? `${userData.name} (我 / Tôi)` : userData.name;
+                const userName = isCurrentUser ? `${userData.name} (Tôi)` : userData.name;
                 
                 userItem.innerHTML = `
                     <div class="user-avatar" style="background-color: ${isCurrentUser ? '#d32f2f' : '#1976d2'}">
@@ -1822,18 +1826,18 @@
             
             // 更新状态显示
             if (buyerCount > 0) {
-                buyerStatus.textContent = "已选 / Đã chọn";
+                buyerStatus.textContent = "Đã chọn";
                 buyerStatus.className = "role-status status-taken";
             } else {
-                buyerStatus.textContent = "可选 / Có thể chọn";
+                buyerStatus.textContent = "Có thể chọn";
                 buyerStatus.className = "role-status status-available";
             }
             
             if (sellerCount > 0) {
-                sellerStatus.textContent = "已选 / Đã chọn";
+                sellerStatus.textContent = "Đã chọn";
                 sellerStatus.className = "role-status status-taken";
             } else {
-                sellerStatus.textContent = "可选 / Có thể chọn";
+                sellerStatus.textContent = "Có thể chọn";
                 sellerStatus.className = "role-status status-available";
             }
         }
@@ -1884,10 +1888,10 @@
             buyerRoleCard.classList.remove('selected', 'disabled');
             sellerRoleCard.classList.remove('selected', 'disabled');
             
-            buyerStatus.textContent = "可选 / Có thể chọn";
+            buyerStatus.textContent = "Có thể chọn";
             buyerStatus.className = "role-status status-available";
             
-            sellerStatus.textContent = "可选 / Có thể chọn";
+            sellerStatus.textContent = "Có thể chọn";
             sellerStatus.className = "role-status status-available";
         }
 
@@ -1897,7 +1901,7 @@
             const step = currentRoom.currentStep || 0;
             
             if (!scenarioId || !scenarios[scenarioId]) {
-                optionsContainer.innerHTML = '<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">请等待选择情景 / Vui lòng chờ chọn tình huống</div>';
+                optionsContainer.innerHTML = '<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">Vui lòng chờ chọn tình huống</div>';
                 return;
             }
             
@@ -1905,12 +1909,12 @@
             const dialogueFlow = scenario.dialogueFlow;
             
             if (!dialogueFlow || dialogueFlow.length === 0) {
-                optionsContainer.innerHTML = '<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">此情景暂无对话数据 / Tình huống này chưa có dữ liệu hội thoại</div>';
+                optionsContainer.innerHTML = '<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">Tình huống này chưa có dữ liệu hội thoại</div>';
                 return;
             }
             
             if (step >= dialogueFlow.length) {
-                optionsContainer.innerHTML = '<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">对话已完成！请选择新情景 / Hội thoại đã hoàn thành! Vui lòng chọn tình huống mới</div>';
+                optionsContainer.innerHTML = '<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">Hội thoại đã hoàn thành! Vui lòng chọn tình huống mới</div>';
                 return;
             }
             
@@ -1918,7 +1922,7 @@
             
             // 检查当前是否是当前用户的回合
             if (currentStepData.speaker !== currentUser.role) {
-                optionsContainer.innerHTML = `<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">请等待 ${currentStepData.speaker === 'buyer' ? '买家' : '卖家'} 说话 / Vui lòng chờ ${currentStepData.speaker === 'buyer' ? 'người mua' : 'người bán'} nói</div>`;
+                optionsContainer.innerHTML = `<div class="option-btn" style="text-align: center; grid-column: 1 / -1;">Vui lòng chờ ${currentStepData.speaker === 'buyer' ? 'người mua' : 'người bán'} nói</div>`;
                 return;
             }
             
@@ -1938,7 +1942,8 @@
                 optionBtn.dataset.index = index;
                 
                 optionBtn.innerHTML = `
-                    <div class="option-text">${option.chinese}</div>
+                    <div class="option-chinese">${option.chinese}</div>
+                    <div class="option-pinyin">${option.pinyin}</div>
                     <div class="option-translation">${option.vietnamese}</div>
                 `;
                 
@@ -1953,12 +1958,12 @@
         // 选择对话选项
         function selectDialogueOption(option) {
             if (!currentRoom.currentScenario) {
-                alert("请先选择情景 / Vui lòng chọn tình huống trước");
+                alert("Vui lòng chọn tình huống trước");
                 return;
             }
             
             // 发送消息
-            sendDialogueMessage(option.chinese, option.vietnamese);
+            sendDialogueMessage(option.chinese, option.pinyin, option.vietnamese);
             
             // 更新步骤
             const nextStep = (currentRoom.currentStep || 0) + 1;
@@ -1966,12 +1971,13 @@
         }
 
         // 发送对话消息
-        function sendDialogueMessage(chinese, vietnamese) {
+        function sendDialogueMessage(chinese, pinyin, vietnamese) {
             // 创建消息对象
             const message = {
                 sender: currentUser.role,
                 senderName: currentUser.name,
                 chinese: chinese,
+                pinyin: pinyin,
                 vietnamese: vietnamese,
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             };
@@ -1979,8 +1985,8 @@
             // 发送到 Firebase
             messagesRef.push(message)
                 .catch((error) => {
-                    console.error("发送消息时出错:", error);
-                    alert("发送消息时出错 / Lỗi khi gửi tin nhắn: " + error.message);
+                    console.error("Lỗi khi gửi tin nhắn:", error);
+                    alert("Lỗi khi gửi tin nhắn: " + error.message);
                 });
         }
 
@@ -2001,10 +2007,10 @@
             // 添加消息到聊天界面
             sortedMessages.forEach(msg => {
                 if (msg.sender === 'buyer' || msg.sender === 'seller') {
-                    addMessageToChat(msg.sender, msg.senderName, msg.chinese, msg.vietnamese, msg.timestamp);
+                    addMessageToChat(msg.sender, msg.senderName, msg.chinese, msg.pinyin, msg.vietnamese, msg.timestamp);
                 } else {
                     // 系统消息
-                    addSystemMessage(msg.chinese + (msg.vietnamese ? " / " + msg.vietnamese : ""));
+                    addSystemMessage(msg.chinese || msg.vietnamese);
                 }
             });
             
@@ -2013,7 +2019,7 @@
         }
 
         // 添加消息到聊天界面
-        function addMessageToChat(senderRole, senderName, chinese, vietnamese, timestamp) {
+        function addMessageToChat(senderRole, senderName, chinese, pinyin, vietnamese, timestamp) {
             const messageDiv = document.createElement('div');
             
             // 设置消息类
@@ -2030,12 +2036,13 @@
             const time = timestamp ? new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
             // 设置发送者显示名称
-            const senderDisplayName = senderName === currentUser.name ? `${senderName} (我 / Tôi)` : senderName;
-            const roleDisplayName = senderRole === 'buyer' ? '买家 / Người mua' : '卖家 / Người bán';
+            const senderDisplayName = senderName === currentUser.name ? `${senderName} (Tôi)` : senderName;
+            const roleDisplayName = senderRole === 'buyer' ? 'Người mua' : 'Người bán';
             
             messageDiv.className = messageClass;
             messageDiv.innerHTML = `
                 <div class="message-sender ${senderRole}">${senderDisplayName} (${roleDisplayName})</div>
+                <div class="pinyin">${escapeHtml(pinyin)}</div>
                 <div class="message-content">${escapeHtml(chinese)}</div>
                 <div class="message-translation">${escapeHtml(vietnamese)}</div>
                 <div class="message-time">${time}</div>
@@ -2049,14 +2056,8 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message message-system';
             
-            // 分割中越双语文本
-            const parts = text.split(' / ');
-            const chineseText = parts[0] || text;
-            const vietnameseText = parts[1] || text;
-            
             messageDiv.innerHTML = `
-                <div class="message-content">${escapeHtml(chineseText)}</div>
-                <div class="message-translation">${escapeHtml(vietnameseText)}</div>
+                <div class="message-content">${escapeHtml(text)}</div>
             `;
             
             chatMessages.appendChild(messageDiv);
@@ -2070,6 +2071,7 @@
 
         // 转义 HTML 特殊字符
         function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
