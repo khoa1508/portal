@@ -11,23 +11,18 @@
     <style>
         /* Custom global styles */
         :root {
-            /* Bảng màu mới dựa trên hình ảnh tham khảo */
-            --color-primary-orange: #FF8C00; /* Cam chính cho tương tác (từ nút trong ảnh) */
-            --color-primary-orange-hover: #E07B00; /* Cam đậm hơn khi hover */
-            
-            --color-header-title-blue: #004A99; /* Xanh dương đậm cho tiêu đề chính của trang */
-            --color-section-title-blue: #105EAD; /* Xanh dương cho tiêu đề các mục (Hán ngữ 1, etc.) */
-
-            --color-text-dark: #2c3e50;    /* Xám xanh đậm cho văn bản chính */
-            --color-text-medium: #55606B;  /* Xám vừa cho văn bản phụ, văn bản thẻ ban đầu */
-            --color-text-light: #7f8c8d;   /* Xám nhạt cho footer */
-
-            --color-background-body: #F4F8FB; /* Xanh dương rất nhạt cho nền trang */
-            --color-background-card: rgba(255, 255, 255, 0.8); /* Nền thẻ glass, tăng độ mờ nhẹ */
-            --color-border-card: rgba(190, 210, 230, 0.6);   /* Viền thẻ xanh nhạt hơn */
-            --color-border-divider: #D8E2EB; /* Viền chia mục */
-            
-            --color-shadow-soft: rgba(44, 62, 80, 0.12); /* Đổ bóng nhẹ nhàng hơn */
+            --color-primary-orange: #FF8C00;
+            --color-primary-orange-hover: #E07B00;
+            --color-header-title-blue: #004A99;
+            --color-section-title-blue: #105EAD;
+            --color-text-dark: #2c3e50;
+            --color-text-medium: #55606B;
+            --color-text-light: #7f8c8d;
+            --color-background-body: #F4F8FB;
+            --color-background-card: rgba(255, 255, 255, 0.8);
+            --color-border-card: rgba(190, 210, 230, 0.6);
+            --color-border-divider: #D8E2EB;
+            --color-shadow-soft: rgba(44, 62, 80, 0.12);
         }
 
         body {
@@ -44,18 +39,18 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #e0eafc; /* Màu nền scrollbar nhạt hơn */
+            background: #e0eafc;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #a7bce8; /* Màu thumb scrollbar */
+            background: #a7bce8;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #8eabd8;
         }
 
-        /* Glass card style using new CSS variables */
+        /* Glass card style */
         .glass-card {
             background: var(--color-background-card);
             backdrop-filter: blur(10px) saturate(180%);
@@ -65,7 +60,7 @@
         }
 
         .focus\:ring-primary-orange:focus {
-             box-shadow: 0 0 0 3px var(--color-primary-orange); /* Cập nhật focus ring */
+             box-shadow: 0 0 0 3px var(--color-primary-orange);
         }
 
         /* Ẩn/hiện phần tử */
@@ -92,6 +87,7 @@
                         placeholder="Nhập mã của bạn..." 
                         class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
                         style="border-color: var(--color-border-card); background: var(--color-background-card); color: var(--color-text-dark);"
+                        onkeypress="handleKeyPress(event)"
                     >
                 </div>
                 <button 
@@ -128,7 +124,8 @@
         </header>
 
         <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Tất cả các section bài tập của bạn đặt ở đây -->
+            <!-- DÁN TOÀN BỘ NỘI DUNG CÁC SECTION CỦA BẠN VÀO ĐÂY -->
+            <!-- Bắt đầu dán từ đây -->
             <section class="mb-12 md:mb-16">
                 <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 pb-3 border-b" style="color: var(--color-section-title-blue); border-color: var(--color-border-divider);">
                     SỔ ĐẦU BÀI
@@ -143,27 +140,23 @@
                 </ul>
             </section>
 
-            <!-- Các section khác giữ nguyên như bạn cung cấp -->
-            <!-- Để tiết kiệm không gian, tôi sẽ chỉ hiển thị 1 section làm ví dụ -->
-            <!-- Bạn có thể dán toàn bộ các section còn lại vào đây -->
-
             <section class="mb-12 md:mb-16">
                 <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 pb-3 border-b" style="color: var(--color-section-title-blue); border-color: var(--color-border-divider);">
-                    Giáo trình hán ngữ 1
+                    BÀI KIỂM TRA GIỮA KỲ CUỐI KỲ
                 </h2>
                 <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
                     <li>
-                        <a href="https://khoa1508.github.io/han1/bai1" target="_blank" title="Chơi Ôn tập bài 1"
+                        <a href="https://khoa1508.github.io/portal/dekiemtra" target="_blank" title="đề kiểm tra"
                            class="glass-card flex flex-col items-center justify-center h-32 sm:h-36 p-4 rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus\:ring-primary-orange group">
-                            <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">Ôn tập bài 1</span>
+                            <span class="text-center font-medium transition-colors" style="color: var(--color-text-medium);">ĐỀ KIỂM TRA</span>
                         </a>
                     </li>
-                    <!-- Các liên kết khác... -->
                 </ul>
             </section>
 
-            <!-- ... Dán tất cả các section còn lại của bạn ở đây ... -->
-
+            <!-- Dán tiếp tất cả các section còn lại của bạn -->
+            <!-- ... -->
+            <!-- Kết thúc dán ở đây -->
         </main>
 
         <footer class="mt-16 md:mt-24 py-8 border-t" style="border-color: var(--color-border-divider);">
@@ -182,7 +175,14 @@
             }
         });
 
-        // Hàm kiểm tra mã
+        // Hàm xử lý phím Enter
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkCode();
+            }
+        }
+
+        // Hàm kiểm tra mã (sử dụng GET thay vì POST cho doGet)
         async function checkCode() {
             const code = document.getElementById('code').value;
             const message = document.getElementById('message');
@@ -198,24 +198,20 @@
             loginBtn.disabled = true;
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbw0UuBeAYAEUcmx81DU6S1MxpJBm_VOutbkBvTGzl__bV2FvEPAtllTcBpn0gizsWEa/exec', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `code=${encodeURIComponent(code)}`
-                });
-
+                // Sử dụng GET thay vì POST vì doGet chỉ nhận GET
+                const apiUrl = `https://script.google.com/macros/s/AKfycbw0UuBeAYAEUcmx81DU6S1MxpJBm_VOutbkBvTGzl__bV2FvEPAtllTcBpn0gizsWEa/exec?code=${encodeURIComponent(code)}`;
+                
+                const response = await fetch(apiUrl);
                 const data = await response.json();
                 
-                if (data.status === 'success' || data.success === true) {
+                if (data.valid === true) {
                     // Đăng nhập thành công
-                    showMessage('Đăng nhập thành công!', 'success');
+                    showMessage(data.message || 'Đăng nhập thành công!', 'success');
                     localStorage.setItem('ddkLoggedIn', 'true');
                     setTimeout(showMainContent, 1000);
                 } else {
                     // Đăng nhập thất bại
-                    showMessage('Mã truy cập không đúng!', 'error');
+                    showMessage(data.message || 'Mã truy cập không đúng!', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -234,9 +230,9 @@
             message.className = 'text-center text-sm mt-4';
             
             if (type === 'success') {
-                message.style.color = '#10B981';
+                message.style.color = '#10B981'; // Xanh lá
             } else if (type === 'error') {
-                message.style.color = '#EF4444';
+                message.style.color = '#EF4444'; // Đỏ
             }
             
             message.classList.remove('hidden');
@@ -257,9 +253,12 @@
                 if (link.getAttribute('rel') === 'noreferrer') {
                     link.removeAttribute('rel');
                 }
-                // Hoặc có thể đặt rel="opener" nếu muốn
-                // link.setAttribute('rel', 'opener');
+                // Đặt rel="opener" theo yêu cầu
+                link.setAttribute('rel', 'opener');
             });
+            
+            // Kích hoạt hiệu ứng hover cho các thẻ
+            setupHoverEffects();
         }
 
         // Hàm đăng xuất
@@ -268,10 +267,11 @@
             document.getElementById('mainContent').classList.add('hidden');
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('code').value = '';
+            document.getElementById('code').focus(); // Focus vào ô nhập mã
         }
 
-        // Script để xử lý class group-hover cho màu chữ trên thẻ
-        document.addEventListener('DOMContentLoaded', function() {
+        // Hàm thiết lập hiệu ứng hover
+        function setupHoverEffects() {
             document.querySelectorAll('.group').forEach(card => {
                 const span = card.querySelector('span');
                 if (span) {
@@ -283,7 +283,7 @@
                     });
                 }
             });
-        });
+        }
     </script>
 </body>
 </html>
