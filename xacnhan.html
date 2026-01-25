@@ -162,6 +162,7 @@
             padding-bottom: 20px;
         }
         .sign-block { text-align: center; width: 250px; }
+        
         .sign-title { 
             font-weight: bold; 
             font-size: 16px; 
@@ -191,20 +192,23 @@
             border-bottom: 2px dashed #ccc;
             padding-bottom: 15px;
         }
-        .rule-content { font-size: 14px; line-height: 1.6; color: #333; text-align: justify; }
+        .rule-content { font-size: 13px; line-height: 1.5; color: #333; text-align: justify; }
         .rule-content h4 { 
             color: #000; 
             margin: 15px 0 8px 0; 
-            font-size: 15px; 
+            font-size: 14px; 
             text-transform: uppercase; 
             background: rgba(200, 200, 200, 0.2);
             padding: 8px 12px;
             border-radius: 4px;
             font-weight: 700;
         }
-        .rule-content h5 { color: #222; margin: 10px 0 4px 0; font-size: 14px; font-weight: 700; text-decoration: underline; }
-        .rule-content ul { margin: 5px 0; padding-left: 25px; }
-        .rule-content li { margin-bottom: 6px; }
+        .rule-content h5 { color: #222; margin: 12px 0 4px 0; font-size: 13px; font-weight: 700; text-decoration: underline; }
+        .rule-content ul { margin: 5px 0; padding-left: 20px; }
+        .rule-content li { margin-bottom: 4px; list-style-type: disc; }
+        .rule-content .sub-list { list-style-type: circle; padding-left: 20px; }
+        .rule-content p { margin: 5px 0; }
+        .rule-content strong { color: #000; font-weight: 700; }
 
         .footer-page {
             text-align: center;
@@ -244,13 +248,13 @@
 
         <input type="file" id="inpLogo" accept="image/*" onchange="loadLogo(event)" style="display:none">
 
-        <button class="btn-download" onclick="downloadPDF()">⬇ Xuất PDF (3 Trang)</button>
+        <button class="btn-download" onclick="downloadPDF()">⬇ Xuất PDF (4 Trang)</button>
         <p style="font-size:12px; color:#666; margin-top:10px; text-align:center;">
-            *File PDF sẽ bao gồm 3 trang A4 (1 Xác nhận + 2 Nội quy).
+            *File PDF bao gồm 4 trang A4:<br> 1 Xác nhận + 3 Nội quy.
         </p>
     </div>
 
-    <!-- PREVIEW AREA: HIỂN THỊ 3 TRANG A4 -->
+    <!-- PREVIEW AREA: HIỂN THỊ 4 TRANG A4 -->
     <div class="preview-container">
         
         <!-- === TRANG 1: XÁC NHẬN === -->
@@ -319,14 +323,13 @@
             </div>
         </div>
 
-        <!-- === TRANG 2: NỘI QUY (PHẦN 1) === -->
+        <!-- === TRANG 2: NỘI QUY (PHẦN 1/3) === -->
         <div id="page-2" class="a4-page">
             <div class="watermark"></div>
             
             <div class="page-content">
                 <div>
-                    <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN (1/2)</div>
-                    
+                    <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN (1/3)</div>
                     <div class="rule-content">
                         <h4>I. Mục đích và nguyên tắc chung</h4>
                         <p>Bộ nội quy và điều khoản này được xây dựng nhằm:</p>
@@ -351,81 +354,139 @@
                         </ul>
                         <h5>3. Hủy đăng ký trước ngày khai giảng</h5>
                         <ul>
-                            <li>Nếu học viên thông báo hủy trước ngày khai giảng tối thiểu 07 ngày, trung tâm hỗ trợ: Bảo lưu tiền học phí (nếu đã đóng) cho khóa học khác trong thời hạn quy định; Không áp dụng hoàn tiền.</li>
+                            <li>Nếu học viên thông báo hủy trước ngày khai giảng tối thiểu 07 ngày, trung tâm hỗ trợ:
+                                <ul class="sub-list">
+                                    <li>Bảo lưu tiền học phí (nếu đã đóng) cho khóa học khác trong thời hạn quy định;</li>
+                                    <li>Không áp dụng hoàn tiền.</li>
+                                </ul>
+                            </li>
                         </ul>
 
                         <h4>III. Quy định về học phí và hoàn phí</h4>
                         <h5>1. Nguyên tắc chung</h5>
+                        <p><strong>Đối với lớp nhóm</strong></p>
                         <ul>
-                            <li><strong>Đối với lớp nhóm:</strong> Học phí được xây dựng dựa trên kế hoạch giảng dạy trọn khóa, số lượng học viên và thời lượng lớp học. Do đó, học phí không mang tính trả theo từng buổi lẻ.</li>
-                            <li><strong>Đối với lớp học 1 kèm 1:</strong> Học phí được thu theo từng giai đoạn học. Trung tâm sẽ thông báo nhắc đóng học phí vào buổi học thứ 6/10. Học viên hoàn thành đóng phí chậm nhất buổi thứ 8.</li>
-                            <li>Trường hợp học viên chưa hoàn thành học phí đúng hạn, trung tâm có quyền: Tạm dừng buổi học tiếp theo; Điều chỉnh lịch hoặc giữ chỗ cho người khác.</li>
+                            <li>Học phí được xây dựng dựa trên kế hoạch giảng dạy trọn khóa, số lượng học viên và thời lượng lớp học.</li>
+                            <li>Do đó, học phí không mang tính trả theo từng buổi lẻ.</li>
+                        </ul>
+                        <p><strong>Đối với lớp học 1 kèm 1</strong></p>
+                        <ul>
+                            <li>Đối với lớp học 1 kèm 1, học phí được thu theo từng giai đoạn học</li>
+                            <li>Trung tâm sẽ thông báo nhắc đóng học phí vào buổi học thứ 6/10 (tùy theo gói học đã đăng ký)</li>
+                            <li>Học viên vui lòng hoàn thành việc đóng học phí chậm nhất vào buổi học thứ 8</li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="footer-page">
-                    Trang 2/3 - Nội quy lớp học - HAN AI LAB
-                </div>
+                <div class="footer-page">Trang 2/4 - Nội quy lớp học - HAN AI LAB</div>
             </div>
         </div>
 
-        <!-- === TRANG 3: NỘI QUY (PHẦN 2) === -->
+        <!-- === TRANG 3: NỘI QUY (PHẦN 2/3) === -->
         <div id="page-3" class="a4-page">
             <div class="watermark"></div>
-            
             <div class="page-content">
                 <div>
-                    <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN (2/2)</div>
-                    
+                    <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN (2/3)</div>
                     <div class="rule-content">
-                        <!-- Tiếp tục phần III -->
-                        <h5>2. Nghỉ học giữa chừng (Quy định riêng lớp 1 kèm 1)</h5>
+                        <!-- Tiếp tục mục 1 của phần III -->
+                        <ul style="margin-top:0">
+                            <li>Trường hợp học viên chưa hoàn thành học phí đúng hạn, trung tâm có quyền:
+                                <ul class="sub-list">
+                                    <li>Tạm dừng buổi học tiếp theo cho đến khi học phí được thanh toán đầy đủ;</li>
+                                    <li>Điều chỉnh lịch học hoặc giữ chỗ cho học viên khác nếu việc chậm trễ kéo dài.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>Quy định này nhằm đảm bảo sự ổn định trong kế hoạch giảng dạy và quyền lợi chung của cả hai bên.</p>
+
+                        <h5>2. Nghỉ học giữa chừng</h5>
+                        <p><strong>Quy định riêng đối với lớp 1 kèm 1</strong></p>
                         <p>Đối với lớp học 1 kèm 1, trong mỗi gói 10 buổi học:</p>
                         <ul>
                             <li>Học viên được hỗ trợ nghỉ tối đa 02 buổi (có thông báo trước) và có thể sắp xếp học bù theo thỏa thuận.</li>
-                            <li>Trường hợp học viên nghỉ từ buổi thứ 3 trở đi: Các buổi nghỉ này vẫn tính là buổi học bình thường; Không sắp xếp học bù.</li>
-                            <li>Trường hợp xin nghỉ giữa khóa vì lý do cá nhân: Không hoàn lại học phí còn lại; Có thể xem xét bảo lưu số buổi chưa học.</li>
+                            <li>Trường hợp học viên nghỉ từ buổi thứ 3 trở đi (tức trên 02 buổi/10 buổi):
+                                <ul class="sub-list">
+                                    <li>Các buổi nghỉ này vẫn được tính là buổi học như bình thường;</li>
+                                    <li>Trung tâm không sắp xếp học bù cho các buổi nghỉ vượt quá số lượng hỗ trợ.</li>
+                                </ul>
+                            </li>
                         </ul>
+                        <p>Quy định này nhằm đảm bảo sự công bằng trong việc phân bổ thời gian giảng dạy và kế hoạch cá nhân của giáo viên.</p>
+                        <ul>
+                            <li>Trường hợp học viên xin nghỉ học giữa khóa vì lý do cá nhân (bận việc, thay đổi kế hoạch, không còn nhu cầu…):
+                                <ul class="sub-list">
+                                    <li>Trung tâm không hoàn lại học phí còn lại;</li>
+                                    <li>Có thể xem xét bảo lưu số buổi chưa học cho khóa sau (trong thời hạn quy định).</li>
+                                </ul>
+                            </li>
+                        </ul>
+
                         <h5>3. Trường hợp đặc biệt</h5>
                         <ul>
-                            <li>Với các lý do bất khả kháng (ốm đau dài ngày, tai nạn...), trung tâm sẽ xem xét hỗ trợ trên tinh thần thiện chí, nhưng quyết định cuối cùng thuộc về phía trung tâm.</li>
+                            <li>Với các lý do bất khả kháng (ốm đau dài ngày, tai nạn…), trung tâm sẽ xem xét hỗ trợ trên tinh thần thiện chí, nhưng quyết định cuối cùng thuộc về phía trung tâm.</li>
                         </ul>
 
                         <h4>IV. Quy định về nghỉ học và bảo lưu</h4>
                         <h5>1. Nghỉ học có báo trước</h5>
                         <ul>
-                            <li>Học viên cần thông báo trước ít nhất 5 tiếng nếu không thể tham gia. Buổi nghỉ có báo trước vẫn được tính là đã xếp lịch, trừ khi có thỏa thuận khác.</li>
+                            <li>Học viên cần thông báo trước ít nhất 5 tiếng nếu không thể tham gia buổi học.</li>
+                            <li>Buổi nghỉ có báo trước vẫn được tính là buổi học đã xếp lịch, trừ khi có thỏa thuận khác.</li>
                         </ul>
                         <h5>2. Bảo lưu khóa học</h5>
                         <ul>
-                            <li>Học viên được phép bảo lưu khóa học 01 lần/khóa, thời hạn tối đa 6 tháng. Sau thời hạn này, khóa học xem là kết thúc.</li>
+                            <li>Học viên được phép bảo lưu khóa học 01 lần/khóa, với thời hạn tối đa 6 tháng.</li>
+                            <li>Sau thời hạn bảo lưu, nếu học viên không quay lại học, khóa học sẽ được xem là kết thúc.</li>
                         </ul>
+                    </div>
+                </div>
+                <div class="footer-page">Trang 3/4 - Nội quy lớp học - HAN AI LAB</div>
+            </div>
+        </div>
 
+        <!-- === TRANG 4: NỘI QUY (PHẦN 3/3) === -->
+        <div id="page-4" class="a4-page">
+            <div class="watermark"></div>
+            <div class="page-content">
+                <div>
+                    <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN (3/3)</div>
+                    <div class="rule-content">
                         <h4>V. Quy định về lịch học và thay đổi lịch</h4>
+                        <h5>1. Lịch học cố định</h5>
                         <ul>
-                            <li><strong>Lịch học cố định:</strong> Được thống nhất trước khai giảng và duy trì xuyên suốt.</li>
-                            <li><strong>Thay đổi từ trung tâm:</strong> Học viên được báo sớm và sắp xếp học bù.</li>
-                            <li><strong>Thay đổi từ học viên:</strong> Trung tâm không cam kết đáp ứng nếu ảnh hưởng đến lớp chung.</li>
+                            <li>Lịch học được thống nhất trước khi khai giảng và duy trì xuyên suốt khóa học.</li>
+                        </ul>
+                        <h5>2. Thay đổi từ phía trung tâm</h5>
+                        <ul>
+                            <li>Trong trường hợp giáo viên cần điều chỉnh lịch (hiếm khi xảy ra), học viên sẽ được thông báo sớm và được sắp xếp học bù phù hợp.</li>
+                        </ul>
+                        <h5>3. Thay đổi từ phía học viên</h5>
+                        <ul>
+                            <li>Trung tâm không cam kết đáp ứng các yêu cầu thay đổi lịch học cá nhân nếu điều đó ảnh hưởng đến kế hoạch chung của lớp.</li>
                         </ul>
 
-                        <h4>VI. Trách nhiệm và cam kết</h4>
+                        <h4>VI. Trách nhiệm và cam kết của hai bên</h4>
+                        <h5>1. Phía giáo viên/trung tâm cam kết:</h5>
                         <ul>
-                            <li><strong>Giáo viên:</strong> Chuẩn bị nội dung phù hợp; Giảng dạy đúng thời lượng; Hỗ trợ học viên trong phạm vi chuyên môn.</li>
-                            <li><strong>Học viên:</strong> Tham gia học đầy đủ, đúng giờ; Tôn trọng giáo viên; Tuân thủ nội quy và điều khoản tài chính.</li>
+                            <li>Chuẩn bị nội dung giảng dạy phù hợp trình độ học viên;</li>
+                            <li>Giảng dạy đúng số buổi, đúng thời lượng đã công bố;</li>
+                            <li>Hỗ trợ học viên trong phạm vi chuyên môn và thời gian hợp lý.</li>
+                        </ul>
+                        <h5>2. Phía học viên cam kết:</h5>
+                        <ul>
+                            <li>Tham gia học đầy đủ, đúng giờ;</li>
+                            <li>Tôn trọng giáo viên và các học viên khác;</li>
+                            <li>Tuân thủ nội quy lớp học và các điều khoản tài chính đã thống nhất.</li>
                         </ul>
 
                         <h4>VII. Hiệu lực điều khoản</h4>
                         <ul>
-                            <li>Nội quy có hiệu lực từ thời điểm đăng ký. Trung tâm có quyền điều chỉnh nội dung và thông báo trước khi áp dụng.</li>
+                            <li>Nội quy và điều khoản này có hiệu lực kể từ thời điểm học viên đăng ký khóa học.</li>
+                            <li>Trung tâm có quyền điều chỉnh nội dung cho phù hợp với tình hình thực tế, và sẽ thông báo công khai trước khi áp dụng.</li>
                         </ul>
-                        <p style="margin-top: 15px; font-style: italic; color: #555;">Trung tâm trân trọng sự hợp tác và đồng hành lâu dài của học viên.</p>
+                        <p style="margin-top: 15px; font-style: italic; color: #555;">Trung tâm trân trọng sự hợp tác và đồng hành lâu dài của học viên. Việc tuân thủ các điều khoản trên sẽ góp phần xây dựng một môi trường học tập ổn định, hiệu quả và tôn trọng lẫn nhau.</p>
                     </div>
                 </div>
-
-                <div class="footer-page">
-                    Trang 3/3 - Nội quy lớp học - HAN AI LAB
-                </div>
+                <div class="footer-page">Trang 4/4 - Nội quy lớp học - HAN AI LAB</div>
             </div>
         </div>
 
@@ -463,7 +524,7 @@
 
         async function downloadPDF() {
             const btn = document.querySelector('.btn-download');
-            btn.innerText = "⏳ Đang tạo 3 trang PDF...";
+            btn.innerText = "⏳ Đang tạo 4 trang PDF...";
             
             try {
                 const { jsPDF } = window.jspdf;
@@ -494,6 +555,14 @@
                 const h3 = (canvas3.height * pdfWidth) / canvas3.width;
                 pdf.addImage(img3, 'PNG', 0, 0, pdfWidth, h3);
 
+                // --- XỬ LÝ TRANG 4 ---
+                pdf.addPage();
+                const page4 = document.getElementById('page-4');
+                const canvas4 = await html2canvas(page4, { scale: 2, useCORS: true });
+                const img4 = canvas4.toDataURL('image/png');
+                const h4 = (canvas4.height * pdfWidth) / canvas4.width;
+                pdf.addImage(img4, 'PNG', 0, 0, pdfWidth, h4);
+
                 // Lưu file
                 const name = document.getElementById('inpName').value || "HocVien";
                 pdf.save(`XacNhan_HanAiLab_${name}.pdf`);
@@ -501,7 +570,7 @@
                 alert("Lỗi: " + err);
                 console.error(err);
             } finally {
-                btn.innerText = "⬇ Xuất PDF (3 Trang)";
+                btn.innerText = "⬇ Xuất PDF (4 Trang)";
             }
         }
     </script>
