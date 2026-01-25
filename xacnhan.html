@@ -6,19 +6,19 @@
     <title>Xác Nhận Nhập Học - HAN AI LAB</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --primary-color: #D32F2F;
             --secondary-color: #f8f9fa;
-            --text-color: #333;
-            --border-color: #e0e0e0;
+            --text-color: #222;
+            --border-color: #ccc;
         }
 
         body {
             font-family: 'Noto Sans', sans-serif;
-            background-color: #e9ecef;
+            background-color: #e0e0e0;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -33,10 +33,11 @@
             background: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            width: 320px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 300px;
             position: sticky;
             top: 20px;
+            height: fit-content;
         }
 
         .control-panel h2 {
@@ -50,32 +51,16 @@
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #555; }
         .form-group input, .form-group select {
-            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; 
-            font-size: 14px; transition: 0.3s; box-sizing: border-box;
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; 
+            font-size: 15px; transition: 0.3s; box-sizing: border-box;
         }
         .form-group input:focus { border-color: var(--primary-color); outline: none; }
         
-        .file-upload-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 5px;
-        }
-        .file-upload-wrapper input[type=file] {
-            font-size: 13px;
-            background: #f8f9fa;
-            padding: 8px;
-            width: 100%;
-        }
-
-        .admin-tools { display: none; }
-
         .btn-download {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 15px;
             width: 100%;
             border-radius: 8px;
             cursor: pointer;
@@ -89,31 +74,27 @@
 
         /* --- CỘT PHẢI: PREVIEW --- */
         .preview-container {
-            background: #525659;
-            padding: 30px;
-            border-radius: 8px;
-            overflow: auto;
-            max-height: 90vh; 
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-height: 95vh;
+            overflow-y: auto;
+            padding-right: 10px;
         }
 
-        #doc-template {
-            width: 750px;
+        /* Thiết kế trang A4 */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
             background: white;
-            padding: 50px;
+            padding: 20mm;
             box-sizing: border-box;
             position: relative;
-            background-color: white; 
-            overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
 
-        /* --- CẤU HÌNH KHỐI (BLOCK) --- */
-        /* Mỗi khối (Xác nhận, Nội quy) sẽ có vị trí tương đối để chứa logo chìm riêng */
-        .doc-section {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* --- WATERMARK (LOGO CHÌM) --- */
+        /* --- WATERMARK --- */
         .watermark {
             position: absolute;
             top: 0;
@@ -122,132 +103,124 @@
             height: 100%; 
             background-image: url('https://res.cloudinary.com/dylnm79id/image/upload/v1769343424/Kho%CC%82ng_ne%CC%82%CC%80n_ev0wrm.png');
             background-repeat: no-repeat;
-            background-position: center center; /* Căn giữa logo trong khối của nó */
-            background-size: 500px; /* Kích thước logo */
-            opacity: 0.1; /* Độ mờ 10% */
+            background-position: center center;
+            background-size: 80%;
+            opacity: 0.06;
             pointer-events: none;
-            z-index: 0; /* Nằm dưới nội dung chữ */
+            z-index: 0;
         }
 
-        /* Đảm bảo nội dung chữ nổi lên trên watermark */
-        .doc-section > *:not(.watermark) {
+        .page-content {
             position: relative;
             z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-
+        
         /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center; 
             border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
+            padding-bottom: 15px;
             margin-bottom: 30px;
         }
+        .brand-area img { height: 70px; object-fit: contain; }
+        .meta-info { text-align: right; color: #555; font-size: 14px; line-height: 1.5; }
 
-        .brand-area {
-            display: flex;
-            align-items: center;
-            gap: 15px; 
-        }
-        
-        #preview-logo {
-            display: none; 
-            max-height: 80px; 
-            max-width: 200px;
-            object-fit: contain;
-        }
+        /* Tiêu đề chính */
+        .main-title { text-align: center; margin-bottom: 40px; }
+        .main-title h1 { margin: 0; font-size: 28px; text-transform: uppercase; color: #222; font-weight: 800; }
+        .main-title p { margin: 8px 0 0; color: #666; font-style: italic; font-size: 16px; }
 
-        .brand-name { font-size: 28px; font-weight: 800; color: var(--primary-color); letter-spacing: 0.5px; }
-        .meta-info { text-align: right; color: #666; font-size: 13px; line-height: 1.5; }
+        /* Bảng thông tin */
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; font-size: 16px; }
+        .info-table td { padding: 15px 10px; border-bottom: 1px solid #eee; }
+        .label-col { width: 160px; color: #555; font-weight: 600; }
+        .value-col { color: #000; font-weight: 700; font-size: 17px; }
 
-        /* Title */
-        .main-title { text-align: center; margin-bottom: 30px; }
-        .main-title h1 { margin: 0; font-size: 26px; text-transform: uppercase; color: #222; }
-        .main-title p { margin: 5px 0 0; color: #666; font-style: italic; }
-
-        /* Info Table */
-        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        .info-table td { padding: 12px 15px; border-bottom: 1px solid #eee; }
-        .info-table tr:first-child td { border-top: 1px solid #eee; }
-        .label-col { width: 140px; color: #666; font-weight: 600; }
-        .value-col { color: #000; font-weight: 700; font-size: 15px; }
-
-        /* Thank You Section */
+        /* Lời cảm ơn */
         .thank-you-box {
-            background-color: transparent; 
-            border-left: 4px solid var(--primary-color);
+            background: transparent;
+            border-left: 5px solid var(--primary-color);
             padding: 20px;
-            border-radius: 0 8px 8px 0;
             margin-bottom: 40px;
-            border: 1px solid rgba(211, 47, 47, 0.1); 
-            border-left-width: 4px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #333;
         }
-        .thank-you-box h3 { margin: 0 0 10px 0; color: var(--primary-color); font-size: 16px; }
-        .thank-you-box p { margin: 0; line-height: 1.6; color: #444; font-size: 14px; text-align: justify; }
+        .thank-you-box h3 { margin-top: 0; color: var(--primary-color); font-size: 18px; }
 
-        /* Signature */
+        /* Chữ ký */
         .signature-section {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 30px; /* Giảm khoảng cách dưới để gọn hơn */
+            margin-top: auto; 
+            padding-bottom: 20px;
         }
-        .sign-block { text-align: center; width: 220px; }
-        .sign-title { font-weight: bold; margin-bottom: 60px; display: block; }
-        .sign-stamp { color: var(--primary-color); font-weight: bold; text-transform: uppercase; }
+        .sign-block { text-align: center; width: 250px; }
+        .sign-title { 
+            font-weight: bold; 
+            font-size: 16px; 
+            margin-bottom: 30px; 
+            display: block; 
+        }
+        .sign-stamp { 
+            color: var(--primary-color); 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            border: 2px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 18px;
+            display: inline-block;
+            transform: rotate(-5deg);
+        }
 
-        /* --- PHẦN NỘI QUY --- */
-        .rules-wrapper {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px dashed #ccc;
-        }
-        
+        /* --- NỘI QUY --- */
         .rules-title {
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             font-weight: 800;
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 15px;
         }
-        .rule-content { font-size: 13px; line-height: 1.6; color: #333; text-align: justify; }
+        .rule-content { font-size: 14px; line-height: 1.6; color: #333; text-align: justify; }
         .rule-content h4 { 
-            color: #222; 
-            margin: 15px 0 5px 0; 
-            font-size: 14px; 
+            color: #000; 
+            margin: 15px 0 8px 0; 
+            font-size: 15px; 
             text-transform: uppercase; 
-            background: rgba(238, 238, 238, 0.8);
-            padding: 5px 10px;
+            background: rgba(200, 200, 200, 0.2);
+            padding: 8px 12px;
             border-radius: 4px;
+            font-weight: 700;
         }
-        .rule-content h5 { color: #444; margin: 10px 0 5px 0; font-size: 13px; font-weight: 700; }
-        .rule-content ul { margin: 5px 0; padding-left: 20px; }
-        .rule-content li { margin-bottom: 4px; }
-        
-        .footer-note {
-            margin-top: 30px;
+        .rule-content h5 { color: #222; margin: 10px 0 4px 0; font-size: 14px; font-weight: 700; text-decoration: underline; }
+        .rule-content ul { margin: 5px 0; padding-left: 25px; }
+        .rule-content li { margin-bottom: 6px; }
+
+        .footer-page {
             text-align: center;
-            font-style: italic;
             font-size: 12px;
-            color: #777;
+            color: #888;
+            margin-top: 20px;
             border-top: 1px solid #eee;
-            padding-top: 15px;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- INPUT PANEL -->
+    <!-- CONTROL PANEL -->
     <div class="control-panel">
         <h2>NHẬP THÔNG TIN</h2>
-
-        <div class="form-group" id="upload-section" style="display:none;">
-            <label>Logo trung tâm</label>
-            <div class="file-upload-wrapper">
-                <input type="file" id="inpLogo" accept="image/*" onchange="loadLogo(event)">
-            </div>
-        </div>
         
         <div class="form-group">
             <label>Tên học viên</label>
@@ -269,69 +242,74 @@
             <input type="date" id="inpDate" oninput="updatePreview()">
         </div>
 
-        <button class="btn-download" onclick="downloadPDF()">⬇ Xuất PDF (Kèm Nội Quy)</button>
+        <input type="file" id="inpLogo" accept="image/*" onchange="loadLogo(event)" style="display:none">
+
+        <button class="btn-download" onclick="downloadPDF()">⬇ Xuất PDF (3 Trang)</button>
+        <p style="font-size:12px; color:#666; margin-top:10px; text-align:center;">
+            *File PDF sẽ bao gồm 3 trang A4 (1 Xác nhận + 2 Nội quy).
+        </p>
     </div>
 
-    <!-- PREVIEW AREA -->
+    <!-- PREVIEW AREA: HIỂN THỊ 3 TRANG A4 -->
     <div class="preview-container">
-        <div id="doc-template">
+        
+        <!-- === TRANG 1: XÁC NHẬN === -->
+        <div id="page-1" class="a4-page">
+            <div class="watermark"></div>
             
-            <!-- --- PHẦN 1: XÁC NHẬN ĐĂNG KÝ (Có logo chìm riêng) --- -->
-            <div class="doc-section confirmation-part">
-                <!-- Logo chìm số 1 -->
-                <div class="watermark"></div>
-
-                <!-- Header -->
-                <div class="header">
-                    <div class="brand-area">
-                        <img id="preview-logo" src="" alt="Logo" crossorigin="anonymous">
-                        <div class="brand-name" id="brandText" style="display:none;">HAN AI LAB</div> 
+            <div class="page-content">
+                <div>
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="brand-area">
+                            <img id="logo-page1" src="" alt="Logo" crossorigin="anonymous">
+                        </div>
+                        <div class="meta-info">
+                            <strong>Mã hồ sơ:</strong> <span id="txtId">---</span><br>
+                            <strong>Ngày lập:</strong> <span id="txtDateHeader">---</span>
+                        </div>
                     </div>
-                    <div class="meta-info">
-                        Mã hồ sơ: <span id="txtId">---</span><br>
-                        Ngày: <span id="txtDateHeader">---</span>
+
+                    <!-- Title -->
+                    <div class="main-title">
+                        <h1>Xác Nhận Đăng Ký Học Thành Công</h1>
+                        <p>Biên bản ghi nhận thông tin học viên</p>
+                    </div>
+
+                    <!-- Info -->
+                    <table class="info-table">
+                        <tr>
+                            <td class="label-col">Học viên:</td>
+                            <td class="value-col" id="txtMainName">Nguyễn Văn A</td>
+                        </tr>
+                        <tr>
+                            <td class="label-col">Khóa học:</td>
+                            <td class="value-col" id="txtCourse">---</td>
+                        </tr>
+                        <tr>
+                            <td class="label-col">Lịch học:</td>
+                            <td class="value-col" id="txtSchedule">---</td>
+                        </tr>
+                        <tr>
+                            <td class="label-col">Trạng thái:</td>
+                            <td class="value-col" style="color: green;">✔ Đăng ký thành công</td>
+                        </tr>
+                    </table>
+
+                    <!-- Thank you -->
+                    <div class="thank-you-box">
+                        <h3>Chào mừng thành viên mới!</h3>
+                        <p>
+                            Chúc mừng bạn <strong id="txtNoteName" style="color: var(--primary-color);">Nguyễn Văn A</strong> đã đăng ký lớp học thành công! Trung tâm <strong>HAN AI LAB</strong> đã ghi nhận đầy đủ thông tin của bạn. 
+                            <br><br>
+                            Cảm ơn bạn đã tin tưởng và lựa chọn đồng hành cùng chúng tôi trong hành trình học tập sắp tới. Chúng mình sẽ sớm liên hệ để cung cấp thêm thông tin chi tiết về lớp học và các hướng dẫn cần thiết.
+                            <br><br>
+                            Rất mong được gặp bạn trong lớp học! 🌱
+                        </p>
                     </div>
                 </div>
 
-                <!-- Main Title -->
-                <div class="main-title">
-                    <h1>Xác Nhận Đăng Ký Học Thành Công</h1>
-                    <p>(Kèm Nội quy & Điều khoản lớp học)</p>
-                </div>
-
-                <!-- Info Table -->
-                <table class="info-table">
-                    <tr>
-                        <td class="label-col">Học viên:</td>
-                        <td class="value-col" id="txtMainName">Nguyễn Văn A</td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Khóa học:</td>
-                        <td class="value-col" id="txtCourse">---</td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Lịch học:</td>
-                        <td class="value-col" id="txtSchedule">---</td>
-                    </tr>
-                    <tr>
-                        <td class="label-col">Trạng thái:</td>
-                        <td class="value-col" style="color: green;">✔ Đăng ký thành công</td>
-                    </tr>
-                </table>
-
-                <!-- Thank You Note -->
-                <div class="thank-you-box">
-                    <h3>Chào mừng thành viên mới!</h3>
-                    <p>
-                        Chúc mừng bạn <strong id="txtNoteName" style="color: var(--primary-color);">Nguyễn Văn A</strong> đã đăng ký lớp học thành công! Trung tâm <strong>HAN AI LAB</strong> đã ghi nhận đầy đủ thông tin của bạn. 
-                        <br><br>
-                        Cảm ơn bạn đã tin tưởng và lựa chọn đồng hành cùng chúng tôi trong hành trình học tập sắp tới. Chúng mình sẽ sớm liên hệ để cung cấp thêm thông tin chi tiết về lớp học và các hướng dẫn cần thiết.
-                        <br><br>
-                        Rất mong được gặp bạn trong lớp học! 🌱
-                    </p>
-                </div>
-
-                <!-- Signature -->
+                <!-- Footer / Signature -->
                 <div class="signature-section">
                     <div class="sign-block">
                         <span class="sign-title">Đại diện HAN AI LAB</span>
@@ -339,126 +317,141 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- --- PHẦN 2: NỘI QUY (Có logo chìm riêng) --- -->
-            <div class="doc-section rules-wrapper">
-                <!-- Logo chìm số 2 -->
-                <div class="watermark"></div>
+        <!-- === TRANG 2: NỘI QUY (PHẦN 1) === -->
+        <div id="page-2" class="a4-page">
+            <div class="watermark"></div>
+            
+            <div class="page-content">
+                <div>
+                    <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN (1/2)</div>
+                    
+                    <div class="rule-content">
+                        <h4>I. Mục đích và nguyên tắc chung</h4>
+                        <p>Bộ nội quy và điều khoản này được xây dựng nhằm:</p>
+                        <ul>
+                            <li>Đảm bảo quyền lợi chính đáng cho giáo viên và học viên;</li>
+                            <li>Tạo môi trường học tập ổn định, nghiêm túc và hiệu quả;</li>
+                            <li>Hạn chế các gián đoạn trong quá trình giảng dạy và học tập.</li>
+                        </ul>
+                        <p>Việc học viên đăng ký lớp học đồng nghĩa với việc đã đọc, hiểu và đồng ý với toàn bộ nội dung dưới đây.</p>
 
-                <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN ĐĂNG KÝ LỚP HỌC</div>
-                <div class="rule-content">
-                    <h4>I. Mục đích và nguyên tắc chung</h4>
-                    <p>Bộ nội quy và điều khoản này được xây dựng nhằm:</p>
-                    <ul>
-                        <li>Đảm bảo quyền lợi chính đáng cho giáo viên và học viên;</li>
-                        <li>Tạo môi trường học tập ổn định, nghiêm túc và hiệu quả;</li>
-                        <li>Hạn chế các gián đoạn trong quá trình giảng dạy và học tập.</li>
-                    </ul>
-                    <p>Việc học viên đăng ký lớp học đồng nghĩa với việc đã đọc, hiểu và đồng ý với toàn bộ nội dung dưới đây.</p>
+                        <h4>II. Quy định về đăng ký và giữ chỗ</h4>
+                        <h5>1. Đăng ký chính thức</h5>
+                        <ul>
+                            <li>Học viên chỉ được xem là đăng ký thành công khi đã hoàn tất học phí hoặc tiền đặt cọc theo thông báo của trung tâm.</li>
+                            <li>Trung tâm có quyền từ chối giữ chỗ nếu học viên chưa hoàn thành nghĩa vụ tài chính đúng thời hạn.</li>
+                        </ul>
+                        <h5>2. Tiền đặt cọc</h5>
+                        <ul>
+                            <li>Tiền đặt cọc có mục đích giữ chỗ, sắp xếp lớp học và kế hoạch giảng dạy.</li>
+                            <li>Trong trường hợp học viên hủy đăng ký hoặc dời lịch học vì lý do cá nhân, tiền đặt cọc không được hoàn lại.</li>
+                            <li>Trong trường hợp trung tâm không sắp xếp được lớp học cho học viên, trung tâm có trách nhiệm hoàn lại tiền đặt cọc.</li>
+                        </ul>
+                        <h5>3. Hủy đăng ký trước ngày khai giảng</h5>
+                        <ul>
+                            <li>Nếu học viên thông báo hủy trước ngày khai giảng tối thiểu 07 ngày, trung tâm hỗ trợ: Bảo lưu tiền học phí (nếu đã đóng) cho khóa học khác trong thời hạn quy định; Không áp dụng hoàn tiền.</li>
+                        </ul>
 
-                    <h4>II. Quy định về đăng ký và giữ chỗ</h4>
-                    <h5>1. Đăng ký chính thức</h5>
-                    <ul>
-                        <li>Học viên chỉ được xem là đăng ký thành công khi đã hoàn tất học phí hoặc tiền đặt cọc theo thông báo của trung tâm.</li>
-                        <li>Trung tâm có quyền từ chối giữ chỗ nếu học viên chưa hoàn thành nghĩa vụ tài chính đúng thời hạn.</li>
-                    </ul>
-                    <h5>2. Tiền đặt cọc</h5>
-                    <ul>
-                        <li>Tiền đặt cọc có mục đích giữ chỗ, sắp xếp lớp học và kế hoạch giảng dạy.</li>
-                        <li>Trong trường hợp học viên hủy đăng ký hoặc dời lịch học vì lý do cá nhân, tiền đặt cọc không được hoàn lại.</li>
-                        <li>Trong trường hợp trung tâm không sắp xếp được lớp học cho học viên, trung tâm có trách nhiệm hoàn lại tiền đặt cọc.</li>
-                    </ul>
-                    <h5>3. Hủy đăng ký trước ngày khai giảng</h5>
-                    <ul>
-                        <li>Nếu học viên thông báo hủy trước ngày khai giảng tối thiểu 07 ngày, trung tâm hỗ trợ: Bảo lưu tiền học phí (nếu đã đóng) cho khóa học khác trong thời hạn quy định; Không áp dụng hoàn tiền.</li>
-                    </ul>
+                        <h4>III. Quy định về học phí và hoàn phí</h4>
+                        <h5>1. Nguyên tắc chung</h5>
+                        <ul>
+                            <li><strong>Đối với lớp nhóm:</strong> Học phí được xây dựng dựa trên kế hoạch giảng dạy trọn khóa, số lượng học viên và thời lượng lớp học. Do đó, học phí không mang tính trả theo từng buổi lẻ.</li>
+                            <li><strong>Đối với lớp học 1 kèm 1:</strong> Học phí được thu theo từng giai đoạn học. Trung tâm sẽ thông báo nhắc đóng học phí vào buổi học thứ 6/10. Học viên hoàn thành đóng phí chậm nhất buổi thứ 8.</li>
+                            <li>Trường hợp học viên chưa hoàn thành học phí đúng hạn, trung tâm có quyền: Tạm dừng buổi học tiếp theo; Điều chỉnh lịch hoặc giữ chỗ cho người khác.</li>
+                        </ul>
+                    </div>
+                </div>
 
-                    <h4>III. Quy định về học phí và hoàn phí</h4>
-                    <h5>1. Nguyên tắc chung</h5>
-                    <ul>
-                        <li><strong>Đối với lớp nhóm:</strong> Học phí được xây dựng dựa trên kế hoạch giảng dạy trọn khóa. Do đó, học phí không mang tính trả theo từng buổi lẻ.</li>
-                        <li><strong>Đối với lớp học 1 kèm 1:</strong> Học phí được thu theo từng giai đoạn học. Trung tâm sẽ thông báo nhắc đóng học phí vào buổi học thứ 6/10. Học viên vui lòng hoàn thành trước buổi thứ 8.</li>
-                        <li>Trường hợp học viên chưa hoàn thành học phí đúng hạn, trung tâm có quyền tạm dừng buổi học tiếp theo.</li>
-                    </ul>
-                    <h5>2. Nghỉ học giữa chừng (Lớp 1 kèm 1)</h5>
-                    <ul>
-                        <li>Trong mỗi gói 10 buổi, học viên được hỗ trợ nghỉ tối đa 02 buổi (có báo trước) và được sắp xếp học bù.</li>
-                        <li>Nghỉ từ buổi thứ 3 trở đi: Vẫn tính là buổi học bình thường, không học bù.</li>
-                        <li>Xin nghỉ giữa khóa vì lý do cá nhân: Không hoàn lại học phí. Có thể xem xét bảo lưu.</li>
-                    </ul>
-                    <h5>3. Trường hợp đặc biệt</h5>
-                    <ul>
-                        <li>Với các lý do bất khả kháng (ốm đau dài ngày, tai nạn…), trung tâm sẽ xem xét hỗ trợ trên tinh thần thiện chí.</li>
-                    </ul>
-
-                    <h4>IV. Quy định về nghỉ học và bảo lưu</h4>
-                    <ul>
-                        <li><strong>Nghỉ học:</strong> Cần báo trước ít nhất 5 tiếng.</li>
-                        <li><strong>Bảo lưu:</strong> Được phép bảo lưu 01 lần/khóa, thời hạn tối đa 6 tháng. Sau thời hạn này khóa học xem như kết thúc.</li>
-                    </ul>
-
-                    <h4>V. Quy định về lịch học</h4>
-                    <ul>
-                        <li>Lịch học được thống nhất trước khi khai giảng. Trung tâm không cam kết đáp ứng yêu cầu thay đổi lịch cá nhân nếu ảnh hưởng đến lớp chung.</li>
-                    </ul>
-
-                    <h4>VI. Trách nhiệm và cam kết</h4>
-                    <ul>
-                        <li><strong>Giáo viên:</strong> Giảng dạy đúng chuyên môn, đúng thời lượng, hỗ trợ học viên tận tình.</li>
-                        <li><strong>Học viên:</strong> Học đúng giờ, tôn trọng giáo viên và bạn học, tuân thủ nội quy.</li>
-                    </ul>
+                <div class="footer-page">
+                    Trang 2/3 - Nội quy lớp học - HAN AI LAB
                 </div>
             </div>
+        </div>
 
-            <div class="footer-note">
-                Văn bản này có hiệu lực kể từ ngày đăng ký. Trân trọng cảm ơn sự hợp tác của bạn.<br>
-                HAN AI LAB
+        <!-- === TRANG 3: NỘI QUY (PHẦN 2) === -->
+        <div id="page-3" class="a4-page">
+            <div class="watermark"></div>
+            
+            <div class="page-content">
+                <div>
+                    <div class="rules-title">NỘI QUY & ĐIỀU KHOẢN (2/2)</div>
+                    
+                    <div class="rule-content">
+                        <!-- Tiếp tục phần III -->
+                        <h5>2. Nghỉ học giữa chừng (Quy định riêng lớp 1 kèm 1)</h5>
+                        <p>Đối với lớp học 1 kèm 1, trong mỗi gói 10 buổi học:</p>
+                        <ul>
+                            <li>Học viên được hỗ trợ nghỉ tối đa 02 buổi (có thông báo trước) và có thể sắp xếp học bù theo thỏa thuận.</li>
+                            <li>Trường hợp học viên nghỉ từ buổi thứ 3 trở đi: Các buổi nghỉ này vẫn tính là buổi học bình thường; Không sắp xếp học bù.</li>
+                            <li>Trường hợp xin nghỉ giữa khóa vì lý do cá nhân: Không hoàn lại học phí còn lại; Có thể xem xét bảo lưu số buổi chưa học.</li>
+                        </ul>
+                        <h5>3. Trường hợp đặc biệt</h5>
+                        <ul>
+                            <li>Với các lý do bất khả kháng (ốm đau dài ngày, tai nạn...), trung tâm sẽ xem xét hỗ trợ trên tinh thần thiện chí, nhưng quyết định cuối cùng thuộc về phía trung tâm.</li>
+                        </ul>
+
+                        <h4>IV. Quy định về nghỉ học và bảo lưu</h4>
+                        <h5>1. Nghỉ học có báo trước</h5>
+                        <ul>
+                            <li>Học viên cần thông báo trước ít nhất 5 tiếng nếu không thể tham gia. Buổi nghỉ có báo trước vẫn được tính là đã xếp lịch, trừ khi có thỏa thuận khác.</li>
+                        </ul>
+                        <h5>2. Bảo lưu khóa học</h5>
+                        <ul>
+                            <li>Học viên được phép bảo lưu khóa học 01 lần/khóa, thời hạn tối đa 6 tháng. Sau thời hạn này, khóa học xem là kết thúc.</li>
+                        </ul>
+
+                        <h4>V. Quy định về lịch học và thay đổi lịch</h4>
+                        <ul>
+                            <li><strong>Lịch học cố định:</strong> Được thống nhất trước khai giảng và duy trì xuyên suốt.</li>
+                            <li><strong>Thay đổi từ trung tâm:</strong> Học viên được báo sớm và sắp xếp học bù.</li>
+                            <li><strong>Thay đổi từ học viên:</strong> Trung tâm không cam kết đáp ứng nếu ảnh hưởng đến lớp chung.</li>
+                        </ul>
+
+                        <h4>VI. Trách nhiệm và cam kết</h4>
+                        <ul>
+                            <li><strong>Giáo viên:</strong> Chuẩn bị nội dung phù hợp; Giảng dạy đúng thời lượng; Hỗ trợ học viên trong phạm vi chuyên môn.</li>
+                            <li><strong>Học viên:</strong> Tham gia học đầy đủ, đúng giờ; Tôn trọng giáo viên; Tuân thủ nội quy và điều khoản tài chính.</li>
+                        </ul>
+
+                        <h4>VII. Hiệu lực điều khoản</h4>
+                        <ul>
+                            <li>Nội quy có hiệu lực từ thời điểm đăng ký. Trung tâm có quyền điều chỉnh nội dung và thông báo trước khi áp dụng.</li>
+                        </ul>
+                        <p style="margin-top: 15px; font-style: italic; color: #555;">Trung tâm trân trọng sự hợp tác và đồng hành lâu dài của học viên.</p>
+                    </div>
+                </div>
+
+                <div class="footer-page">
+                    Trang 3/3 - Nội quy lớp học - HAN AI LAB
+                </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        const LOGO_MAC_DINH = "https://res.cloudinary.com/dylnm79id/image/upload/v1769343291/Co%CC%81_ne%CC%82%CC%80n_pebclj.jpg";
+        const LOGO_LINK = "https://res.cloudinary.com/dylnm79id/image/upload/v1769343291/Co%CC%81_ne%CC%82%CC%80n_pebclj.jpg";
         
         window.onload = function() {
             document.getElementById('inpDate').valueAsDate = new Date();
             updatePreview();
 
-            if (LOGO_MAC_DINH) {
-                const img = document.getElementById('preview-logo');
-                img.src = LOGO_MAC_DINH;
-                img.style.display = 'block';
-                document.getElementById('upload-section').style.display = 'none'; 
-            }
+            // Set Logo cho Trang 1
+            const img1 = document.getElementById('logo-page1');
+            img1.src = LOGO_LINK;
         };
-
-        function loadLogo(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    displayLogo(e.target.result);
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function displayLogo(src) {
-            const img = document.getElementById('preview-logo');
-            img.src = src;
-            img.style.display = 'block';
-        }
 
         function updatePreview() {
             const name = document.getElementById('inpName').value || "Nguyễn Văn A";
             const course = document.getElementById('inpCourse').value || "Tên khóa học";
             const schedule = document.getElementById('inpSchedule').value || "---";
             const dateInput = document.getElementById('inpDate').value;
-            
             const dateObj = dateInput ? new Date(dateInput) : new Date();
 
             if(document.getElementById('txtId').innerText === "---") {
-                document.getElementById('txtId').innerText = "DK" + Math.floor(Math.random() * 100000);
+                document.getElementById('txtId').innerText = "DK" + Math.floor(Math.random() * 10000);
             }
 
             document.getElementById('txtDateHeader').innerText = dateObj.toLocaleDateString('vi-VN');
@@ -469,32 +462,46 @@
         }
 
         async function downloadPDF() {
-            const element = document.getElementById('doc-template');
-            const name = document.getElementById('inpName').value || "HocVien";
             const btn = document.querySelector('.btn-download');
-            
-            btn.innerText = "⏳ Đang xử lý...";
+            btn.innerText = "⏳ Đang tạo 3 trang PDF...";
             
             try {
-                const canvas = await html2canvas(element, { 
-                    scale: 2, 
-                    useCORS: true,
-                    allowTaint: true
-                });
-                const imgData = canvas.toDataURL('image/png');
-                
                 const { jsPDF } = window.jspdf;
-                const pdfWidth = 210; 
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-                const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
+                // Tạo file PDF khổ A4
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
+                
+                // --- XỬ LÝ TRANG 1 ---
+                const page1 = document.getElementById('page-1');
+                const canvas1 = await html2canvas(page1, { scale: 2, useCORS: true });
+                const img1 = canvas1.toDataURL('image/png');
+                const h1 = (canvas1.height * pdfWidth) / canvas1.width;
+                pdf.addImage(img1, 'PNG', 0, 0, pdfWidth, h1);
 
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                // --- XỬ LÝ TRANG 2 ---
+                pdf.addPage();
+                const page2 = document.getElementById('page-2');
+                const canvas2 = await html2canvas(page2, { scale: 2, useCORS: true });
+                const img2 = canvas2.toDataURL('image/png');
+                const h2 = (canvas2.height * pdfWidth) / canvas2.width;
+                pdf.addImage(img2, 'PNG', 0, 0, pdfWidth, h2);
+
+                // --- XỬ LÝ TRANG 3 ---
+                pdf.addPage();
+                const page3 = document.getElementById('page-3');
+                const canvas3 = await html2canvas(page3, { scale: 2, useCORS: true });
+                const img3 = canvas3.toDataURL('image/png');
+                const h3 = (canvas3.height * pdfWidth) / canvas3.width;
+                pdf.addImage(img3, 'PNG', 0, 0, pdfWidth, h3);
+
+                // Lưu file
+                const name = document.getElementById('inpName').value || "HocVien";
                 pdf.save(`XacNhan_HanAiLab_${name}.pdf`);
             } catch (err) {
-                alert("Lỗi xuất PDF: " + err);
+                alert("Lỗi: " + err);
                 console.error(err);
             } finally {
-                btn.innerText = "⬇ Xuất PDF (Kèm Nội Quy)";
+                btn.innerText = "⬇ Xuất PDF (3 Trang)";
             }
         }
     </script>
