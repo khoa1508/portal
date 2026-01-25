@@ -248,9 +248,9 @@
 
         <input type="file" id="inpLogo" accept="image/*" onchange="loadLogo(event)" style="display:none">
 
-        <button class="btn-download" onclick="downloadPDF()">⬇ Xuất PDF (4 Trang)</button>
+        <button class="btn-download" onclick="downloadPDF()">⬇ Xuất PDF (Tối ưu dung lượng)</button>
         <p style="font-size:12px; color:#666; margin-top:10px; text-align:center;">
-            *File PDF bao gồm 4 trang A4:<br> 1 Xác nhận + 3 Nội quy.
+            *File PDF bao gồm 4 trang A4.<br>Đã tối ưu để gửi qua Zalo/Email.
         </p>
     </div>
 
@@ -542,40 +542,27 @@
             
             try {
                 const { jsPDF } = window.jspdf;
-                // Tạo file PDF khổ A4
+                // Tạo file PDF khổ A4, hướng portrait (p), đơn vị mm
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
                 
-                // --- XỬ LÝ TRANG 1 ---
-                const page1 = document.getElementById('page-1');
-                const canvas1 = await html2canvas(page1, { scale: 2, useCORS: true });
-                const img1 = canvas1.toDataURL('image/png');
-                const h1 = (canvas1.height * pdfWidth) / canvas1.width;
-                pdf.addImage(img1, 'PNG', 0, 0, pdfWidth, h1);
+                // Hàm helper để thêm trang vào PDF
+                // Sử dụng JPEG chất lượng 0.85 để nén dung lượng file
+                const addPageToPdf = async (elementId, isFirstPage) => {
+                    const element = document.getElementById(elementId);
+                    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+                    const imgData = canvas.toDataURL('image/jpeg', 0.85); // Nén JPEG
+                    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+                    
+                    if (!isFirstPage) pdf.addPage();
+                    pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, imgHeight);
+                };
 
-                // --- XỬ LÝ TRANG 2 ---
-                pdf.addPage();
-                const page2 = document.getElementById('page-2');
-                const canvas2 = await html2canvas(page2, { scale: 2, useCORS: true });
-                const img2 = canvas2.toDataURL('image/png');
-                const h2 = (canvas2.height * pdfWidth) / canvas2.width;
-                pdf.addImage(img2, 'PNG', 0, 0, pdfWidth, h2);
-
-                // --- XỬ LÝ TRANG 3 ---
-                pdf.addPage();
-                const page3 = document.getElementById('page-3');
-                const canvas3 = await html2canvas(page3, { scale: 2, useCORS: true });
-                const img3 = canvas3.toDataURL('image/png');
-                const h3 = (canvas3.height * pdfWidth) / canvas3.width;
-                pdf.addImage(img3, 'PNG', 0, 0, pdfWidth, h3);
-
-                // --- XỬ LÝ TRANG 4 ---
-                pdf.addPage();
-                const page4 = document.getElementById('page-4');
-                const canvas4 = await html2canvas(page4, { scale: 2, useCORS: true });
-                const img4 = canvas4.toDataURL('image/png');
-                const h4 = (canvas4.height * pdfWidth) / canvas4.width;
-                pdf.addImage(img4, 'PNG', 0, 0, pdfWidth, h4);
+                // Xử lý lần lượt từng trang
+                await addPageToPdf('page-1', true);
+                await addPageToPdf('page-2', false);
+                await addPageToPdf('page-3', false);
+                await addPageToPdf('page-4', false);
 
                 // Lưu file
                 const name = document.getElementById('inpName').value || "HocVien";
@@ -584,7 +571,7 @@
                 alert("Lỗi: " + err);
                 console.error(err);
             } finally {
-                btn.innerText = "⬇ Xuất PDF (4 Trang)";
+                btn.innerText = "⬇ Xuất PDF (Tối ưu dung lượng)";
             }
         }
     </script>
