@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hán Ngữ Số - Thi Nói</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
+        .container { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px; }
+        input { padding: 10px; width: 80%; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+        .hidden { display: none; }
+        .status-box { padding: 20px; border: 2px dashed #ccc; margin-top: 20px; color: #666; }
+        .recording { border-color: red; color: red; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="loginScreen" class="container">
+        <h2>Phòng Thi Nói</h2>
+        <p>Nhập mã học viên giáo viên cung cấp</p>
+        <input type="text" id="studentId" placeholder="Ví dụ: HV01">
+        <br>
+        <button onclick="joinRoom()">Vào phòng chờ</button>
+    </div>
+
+    <div id="waitingScreen" class="container hidden">
+        <h2>⏳ Đang kết nối...</h2>
+        <p>Xin chào <b id="displayId"></b></p>
+        <div class="status-box">
+            Đang đợi tín hiệu mở đề từ giáo viên...<br>
+            Vui lòng không tắt trình duyệt.
+        </div>
+    </div>
+
+    <div id="examScreen" class="container hidden">
+        <h2 style="color: #d9534f;">🔴 ĐANG THI NÓI</h2>
+        <div id="questionContent">
+            <h3>Đề bài: Giới thiệu bản thân bằng tiếng Trung (1 phút)</h3>
+            </div>
+        <div class="status-box recording">
+            MIC ĐANG MỞ <br> (Giả lập ghi âm)
+        </div>
+    </div>
+
+    <script type="module">
+        // 1. IMPORT THƯ VIỆN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        // 2. CẤU HÌNH (THAY THẾ BẰNG THÔNG TIN CỦA BẠN)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcsk8X1rFd1qMd1W9510-ZKFlSfZUUKV8", // <--- COPY TỪ FIREBASE CONSOLE
+            authDomain: "hannguso-exam.firebaseapp.com",
+            databaseURL: "https://hannguso-exam-default-rtdb.asia-southeast1.firebasedatabase.app", // <--- COPY DÒNG NÀY CHÍNH XÁC
+            projectId: "hannguso-exam",
+            storageBucket: "hannguso-exam.appspot.com",
+            messagingSenderId: "...",
+            appId: "..."
+        };
+
+        // 3. KHỞI TẠO
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Biến toàn cục để dùng trong hàm onclick
+        window.joinRoom = function() {
+            const sId = document.getElementById('studentId').value.trim();
+            if(!sId) return alert("Vui lòng nhập Mã học viên!");
+
+            // Chuyển màn hình
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('waitingScreen').classList.remove('hidden');
+            document.getElementById('displayId').innerText = sId;
+
+            // 4. LẮNG NGHE TÍN HIỆU TỪ FIREBASE
+            const studentRef = ref(db, 'students/' + sId + '/isOpen');
+            
+            onValue(studentRef, (snapshot) => {
+                const isOpen = snapshot.val();
+                console.log("Trạng thái nhận được:", isOpen);
+
+                if (isOpen === true) {
+                    // MỞ KHÓA
+                    document.getElementById('waitingScreen').classList.add('hidden');
+                    document.getElementById('examScreen').classList.remove('hidden');
+                } else {
+                    // KHÓA LẠI (Nếu giáo viên bỏ tích)
+                    document.getElementById('examScreen').classList.add('hidden');
+                    document.getElementById('waitingScreen').classList.remove('hidden');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
